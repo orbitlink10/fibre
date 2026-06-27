@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\Setting;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         $defaults = [
             'home_site_brand' => 'AMAZON LEO',
@@ -74,8 +77,35 @@ class HomeController extends Controller
         ]);
         $content['home_mobile_menu_url'] = Setting::valueFor('home_mobile_menu_url', '#installation-support') ?: '#installation-support';
 
+        $search = trim((string) $request->query('search', ''));
+        $categories = Category::query()
+            ->where('is_active', true)
+            ->withCount('products')
+            ->orderBy('name')
+            ->get();
+        $products = Product::query()
+            ->with('category')
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('subcategory', 'like', '%'.$search.'%')
+                        ->orWhereHas('category', fn ($query) => $query->where('name', 'like', '%'.$search.'%'));
+                });
+            })
+            ->latest()
+            ->take(24)
+            ->get()
+            ->map(function (Product $product) {
+                $product->homepage_image_url = $this->imageUrl($product->image);
+
+                return $product;
+            });
+
         return view('home', [
             'content' => $content,
+            'categories' => $categories,
+            'products' => $products,
+            'search' => $search,
         ]);
     }
 
