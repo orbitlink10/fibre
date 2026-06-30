@@ -1,11 +1,10 @@
 @extends('layouts.app')
-@section('title', 'MikroTik Kenya Marketplace')
-@section('meta_description', 'Buy genuine MikroTik routers, WiFi systems, switches, LTE devices, antennas, and networking accessories in Kenya.')
+@section('title', 'Fiber Optics Kenya')
+@section('meta_description', 'Shop fiber optic networking products, installation accessories, routers, switches, and connectivity equipment in Kenya.')
 @section('full_bleed', true)
 @section('content')
 @php
     $sourceBase = 'https://mikrotikkenya.co.ke';
-    $logoImage = $sourceBase.'/uploads/homepage-content/20260514134523-logo-t88vypywtg.png';
     $heroImage = $sourceBase.'/uploads/homepage-content/20260512190532-ffuavwjom9.webp';
     $visibleCategories = $categories->take(24);
     $fallbackProducts = collect([
@@ -24,8 +23,9 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-topbar{height:auto;min-height:42px;padding:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#0a4588,#1677ff);color:#fff;font-size:16px!important;line-height:1.35;font-weight:600;text-align:center}
 .mk-header{background:#fff;border-bottom:1px solid #e5e7eb}
 .mk-header-inner{max-width:1760px;margin:0 auto;padding:12px 66px;display:grid;grid-template-columns:320px minmax(360px,1fr) 270px;gap:16px;align-items:center}
-.mk-logo{display:inline-flex;align-items:center;justify-content:center;width:300px;height:112px;min-width:0;overflow:hidden;text-decoration:none}
-.mk-logo img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center}
+.mk-logo{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;width:300px;height:112px;min-width:0;overflow:hidden;text-decoration:none;color:#0a4588}
+.mk-logo-main{display:block;font-size:31px!important;line-height:1.05;font-weight:900;letter-spacing:0;color:#0a4588}
+.mk-logo-sub{display:block;margin-top:7px;font-size:12px!important;line-height:1.2;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1677ff}
 .mk-search{display:flex;gap:12px;align-items:center}
 .mk-search input{width:100%;height:56px;border:1px solid #e5e7eb;border-radius:10px;padding:0 18px;font-size:18px!important;font-weight:400;color:#111827;outline:none;background:#fff}
 .mk-search input::placeholder{color:#6b7280;opacity:1}
@@ -87,12 +87,13 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 </style>
 
 <div class="mk-store">
-    <div class="mk-topbar">Laravel Multi-Vendor Marketplace (MySQL)</div>
+    <div class="mk-topbar">Fiber Optics Kenya</div>
 
     <header class="mk-header">
         <div class="mk-header-inner">
-            <a class="mk-logo" href="{{ route('home') }}" aria-label="MikroTik Kenya home">
-                <img src="{{ $logoImage }}" alt="Mikrotik Kenya">
+            <a class="mk-logo" href="{{ route('home') }}" aria-label="Fiber Optics Kenya home">
+                <span class="mk-logo-main">Fiber Optics Kenya</span>
+                <span class="mk-logo-sub">Networking & Connectivity</span>
             </a>
 
             <form class="mk-search" action="{{ route('home') }}" method="get">
@@ -116,7 +117,7 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
                 @forelse($visibleCategories as $category)
                     <a class="mk-category" href="{{ route('home', ['search' => $category->name]) }}">{{ $category->name }}</a>
                 @empty
-                    @foreach(['Mikrotik', 'Mikrotik 60 GHz Products In Kenya', 'Mikrotik access points price in Kenya', 'Mikrotik accessories for Sale In Kenya', 'Mikrotik antennas Price In Kenya', 'Mikrotik Ethernet Routers'] as $category)
+                    @foreach(['Fiber Optic Cables', 'Fiber Routers', 'Fiber Switches', 'SFP Modules', 'Patch Panels', 'Networking Accessories'] as $category)
                         <a class="mk-category" href="{{ route('home', ['search' => $category]) }}">{{ $category }}</a>
                     @endforeach
                 @endforelse
@@ -126,8 +127,8 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
         <section class="mk-content" aria-label="Products">
             <section class="mk-hero">
                 <div class="mk-hero-inner">
-                    <h1>MikroTik Kenya | Buy Genuine MikroTik Devices</h1>
-                    <p>Find affordable MikroTik Kenya networking devices including routers, WiFi systems, and managed switches for reliable connectivity in East Africa.</p>
+                    <h1>Fiber Optics Kenya | Buy Genuine Networking Devices</h1>
+                    <p>Find affordable fiber optic cables, routers, switches, SFP modules, and networking accessories for reliable connectivity in East Africa.</p>
                 </div>
             </section>
 

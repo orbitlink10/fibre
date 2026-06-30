@@ -100,7 +100,7 @@
 <article class="article-page">
     <div class="article-shell">
         <section class="article-cta">
-            <h2>Book Amazon LEO Internet installation</h2>
+            <h2>Book Fiber Optics Kenya installation</h2>
             <p>Schedule satellite internet kits, installation, support, and connectivity planning across Kenya.</p>
             <a href="{{ route('bookings.create') }}">Book installation</a>
         </section>
@@ -146,7 +146,7 @@
                 <section class="article-author" aria-label="Author">
                     <div class="author-avatar">LEO</div>
                     <div>
-                        <h2>Amazon LEO Internet Team</h2>
+                        <h2>Fiber Optics Kenya Team</h2>
                         <p>Satellite internet guides, installation advice, and connectivity planning resources for homes and businesses in Kenya.</p>
                     </div>
                 </section>

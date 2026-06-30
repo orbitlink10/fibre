@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Dashboard') - Amazon LEO Internet</title>
+    <title>@yield('title', 'Dashboard') - Fiber Optics Kenya</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -80,7 +80,7 @@
     <aside class="dashboard-sidebar">
         <a class="dashboard-brand" href="{{ route('home') }}">
             <span class="dashboard-brand-mark">LA</span>
-            <span>Amazon LEO Internet</span>
+            <span>Fiber Optics Kenya</span>
         </a>
 
         <div class="sidebar-section">
@@ -187,7 +187,7 @@
     </aside>
 
     <main class="dashboard-main">
-        @unless(trim($__env->yieldContent('dashboard-title', 'Dashboard')) === '' && trim($__env->yieldContent('dashboard-subtitle', 'Manage Amazon LEO Internet operations from one place.')) === '' && trim($__env->yieldContent('dashboard-actions')) === '')
+        @unless(trim($__env->yieldContent('dashboard-title', 'Dashboard')) === '' && trim($__env->yieldContent('dashboard-subtitle', 'Manage Fiber Optics Kenya operations from one place.')) === '' && trim($__env->yieldContent('dashboard-actions')) === '')
             <div class="dashboard-topbar">
                 <div>
                     @hasSection('dashboard-title')
@@ -198,7 +198,7 @@
                     @hasSection('dashboard-subtitle')
                         @if(trim($__env->yieldContent('dashboard-subtitle')) !== '')<p class="dashboard-subtitle">@yield('dashboard-subtitle')</p>@endif
                     @else
-                        <p class="dashboard-subtitle">Manage Amazon LEO Internet operations from one place.</p>
+                        <p class="dashboard-subtitle">Manage Fiber Optics Kenya operations from one place.</p>
                     @endif
                 </div>
                 @yield('dashboard-actions')

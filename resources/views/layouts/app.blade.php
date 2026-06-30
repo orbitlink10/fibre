@@ -6,7 +6,7 @@
     @hasSection('meta_description')
         <meta name="description" content="@yield('meta_description')">
     @endif
-    <title>@yield('title', 'Amazon LEO Internet')</title>
+    <title>@yield('title', 'Fiber Optics Kenya')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
@@ -98,7 +98,7 @@
     @yield('content')
 @else
 @php
-    $pageBrand = \App\Models\Setting::valueFor('home_site_brand', 'AMAZON LEO') ?: 'AMAZON LEO';
+    $pageBrand = \App\Models\Setting::valueFor('home_site_brand', 'Fiber Optics Kenya') ?: 'Fiber Optics Kenya';
     $pagePhone = \App\Models\Setting::valueFor('home_phone', '+254 704 991 492') ?: '+254 704 991 492';
     $pagePhoneHref = 'tel:'.preg_replace('/\D+/', '', $pagePhone);
     $pagePrimaryMenu = json_decode((string) \App\Models\Setting::valueFor('home_primary_menu', ''), true);
@@ -146,7 +146,7 @@
             <div class="row g-5">
                 <div class="col-lg-3">
                     <h2 class="footer-title">CONTACT US</h2>
-                    <a class="footer-brand" href="{{ route('home') }}"><span class="brand-mark">LA</span><strong>Amazon LEO</strong></a>
+                    <a class="footer-brand" href="{{ route('home') }}"><span class="brand-mark">FO</span><strong>Fiber Optics Kenya</strong></a>
                     <ul class="footer-contact">
                         <li><i class="bi bi-telephone-fill"></i><span>+254 711 000 000</span></li>
                         <li><i class="bi bi-envelope-fill"></i><span>support@amazoninternetkenya.co.ke</span></li>
@@ -165,7 +165,7 @@
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}#residential">Residential Internet</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}#roam">Roam Internet</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}#installation-support">Connectivity Support</a></li>
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}">Amazon LEO Kenya</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}">Fiber Optics Kenya</a></li>
                     </ul>
                     <h2 class="footer-title mt-4 mb-3">Our Office Address</h2>
                     <div class="footer-address"><i class="bi bi-geo-alt-fill"></i><span>Nairobi, Kenya. Satellite internet installation support available across Kenya.</span></div>
@@ -186,7 +186,7 @@
                     </form>
                 </div>
             </div>
-            <div class="footer-copy">© {{ date('Y') }} Amazon LEO Internet. Satellite internet kits, installation, support, and connectivity planning across Kenya.</div>
+            <div class="footer-copy">© {{ date('Y') }} Fiber Optics Kenya. Networking products, installation support, and connectivity planning across Kenya.</div>
         </div>
     </section>
 </footer>
