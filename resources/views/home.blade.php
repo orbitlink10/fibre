@@ -5,7 +5,12 @@
 @section('content')
 @php
     $sourceBase = 'https://mikrotikkenya.co.ke';
-    $heroImage = $sourceBase.'/uploads/homepage-content/20260512190532-ffuavwjom9.webp';
+    $heroImage = $content['home_hero_image_url'] ?? $sourceBase.'/uploads/homepage-content/20260512190532-ffuavwjom9.webp';
+    $brandText = $content['home_site_brand'] ?? 'Fiber Optics Kenya';
+    $heroTitle = $content['home_hero_title'] ?? 'Fiber Optics Kenya | Buy Genuine Networking Devices';
+    $heroDescription = $content['home_hero_description'] ?? 'Find affordable fiber optic cables, routers, switches, SFP modules, and networking accessories for reliable connectivity in East Africa.';
+    $servicesTitle = $content['home_services_title'] ?? 'Products';
+    $servicesSubtitle = $content['home_services_subtitle'] ?? 'Fiber optic products, networking equipment, and installation support across Kenya.';
     $visibleCategories = $categories->take(24);
     $fallbackProducts = collect([
         ['name' => 'Mikrotik Intercell 10 B38+B39', 'price' => 85000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092341-vsplsq9n5r.jpg'],
@@ -56,12 +61,28 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-price{font-size:16px!important;line-height:1.2;color:#0a4588;font-weight:700;margin:0 0 10px}
 .mk-card-action{min-height:40px;font-size:14px!important;padding:0 14px}
 .mk-empty{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:32px;font-size:18px;color:#475467}
+.mk-section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 16px}
+.mk-section-head h2{font-size:28px!important;line-height:1.15;margin:0;color:#031532;font-weight:850;white-space:pre-line}
+.mk-section-head p{max-width:760px;margin:0;color:#526174;font-size:16px!important;line-height:1.45}
+.mk-info{grid-column:1/-1;margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.mk-info-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px;min-width:0}
+.mk-info-card h2{font-size:18px!important;line-height:1.24;margin:0 0 10px;color:#031532;font-weight:800}
+.mk-info-card p{font-size:15px!important;line-height:1.55;margin:0 0 12px;color:#475467}
+.mk-info-card strong{display:block;color:#0a4588;font-size:17px!important}
+.mk-long-content{grid-column:1/-1;margin-top:18px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;color:#1f2937;font-size:18px!important;line-height:1.65}
+.mk-long-content h1,.mk-long-content h2,.mk-long-content h3{color:#031532;font-weight:850;line-height:1.2;margin:0 0 14px}
+.mk-long-content h1{font-size:32px!important}
+.mk-long-content h2{font-size:26px!important;margin-top:24px}
+.mk-long-content h3{font-size:22px!important;margin-top:20px}
+.mk-long-content p{margin:0 0 16px}
+.mk-long-content a{color:#0a4588;font-weight:700}
 @media(max-width:1100px){
     .mk-header-inner{grid-template-columns:240px minmax(280px,1fr);padding:12px 26px;gap:16px}
     .mk-logo{width:260px}
     .mk-account{grid-column:1/-1;justify-content:flex-end}
     .mk-main{grid-template-columns:280px minmax(0,1fr);padding:18px 26px}
     .mk-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .mk-info{grid-template-columns:1fr}
 }
 @media(max-width:900px){
     .mk-topbar{height:auto;min-height:52px;padding:10px 18px;font-size:17px}
@@ -77,6 +98,8 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
     .mk-hero h1{font-size:26px!important}
     .mk-hero p{font-size:16px!important}
     .mk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .mk-section-head{display:block}
+    .mk-section-head p{margin-top:8px}
 }
 @media(max-width:560px){
     .mk-logo{width:min(240px,100%);height:88px}
@@ -87,12 +110,12 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 </style>
 
 <div class="mk-store">
-    <div class="mk-topbar">Fiber Optics Kenya</div>
+    <div class="mk-topbar">{{ $brandText }}</div>
 
     <header class="mk-header">
         <div class="mk-header-inner">
-            <a class="mk-logo" href="{{ route('home') }}" aria-label="Fiber Optics Kenya home">
-                <span class="mk-logo-main">Fiber Optics Kenya</span>
+            <a class="mk-logo" href="{{ route('home') }}" aria-label="{{ $brandText }} home">
+                <span class="mk-logo-main">{{ $brandText }}</span>
                 <span class="mk-logo-sub">Networking & Connectivity</span>
             </a>
 
@@ -102,6 +125,7 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
             </form>
 
             <nav class="mk-account" aria-label="Account links">
+                <a href="{{ $content['home_phone_href'] ?? '#' }}"><strong>{{ $content['home_phone'] ?? '' }}</strong></a>
                 <a href="{{ route('login') }}">Login</a>
                 <a href="{{ route('register') }}"><strong>Register</strong></a>
                 <a href="{{ route('home') }}"><strong>Cart (0)</strong></a>
@@ -127,10 +151,18 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
         <section class="mk-content" aria-label="Products">
             <section class="mk-hero">
                 <div class="mk-hero-inner">
-                    <h1>Fiber Optics Kenya | Buy Genuine Networking Devices</h1>
-                    <p>Find affordable fiber optic cables, routers, switches, SFP modules, and networking accessories for reliable connectivity in East Africa.</p>
+                    <h1>{!! nl2br(e($heroTitle)) !!}</h1>
+                    <p>{{ $heroDescription }}</p>
                 </div>
             </section>
+
+            <div class="mk-section-head">
+                <div>
+                    <h2>{!! nl2br(e($servicesTitle)) !!}</h2>
+                    <p>{{ $servicesSubtitle }}</p>
+                </div>
+                <a class="mk-card-action" href="{{ route('bookings.create') }}">{{ $content['home_primary_cta'] ?? 'Request For Installation' }}</a>
+            </div>
 
             @if($products->isNotEmpty())
                 <div class="mk-grid">
@@ -167,6 +199,21 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
                     @endforeach
                 </div>
             @endif
+
+            <section class="mk-info" aria-label="Homepage highlights">
+                @for($i = 1; $i <= 3; $i++)
+                    <article class="mk-info-card">
+                        <h2>{{ $content['home_kit_title_'.$i] ?? '' }}</h2>
+                        <p>{{ $content['home_kit_text_'.$i] ?? '' }}</p>
+                        <strong>{{ $content['home_kit_price_'.$i] ?? '' }}</strong>
+                    </article>
+                @endfor
+            </section>
+
+            <section class="mk-long-content" aria-label="{{ $content['home_testimonials_title'] ?? 'Homepage content' }}">
+                <h2>{{ $content['home_testimonials_title'] ?? 'Homepage content' }}</h2>
+                {!! $content['home_empty_testimonials'] ?? '' !!}
+            </section>
         </section>
     </main>
 </div>
