@@ -10,6 +10,7 @@ class HomepageContentController extends Controller
 {
     private array $fields = [
         'home_site_brand' => 'Fiber Optics Kenya',
+        'home_logo_image' => '',
         'home_phone' => '+254 704 991 492',
         'home_hero_title' => "Fast\nFiber Optic Internet\nwith Reliable Support\nin Kenya.",
         'home_hero_description' => 'High-speed networking products and installation support',
@@ -63,6 +64,7 @@ class HomepageContentController extends Controller
         $content['home_feature_image'] = trim((string) $content['home_feature_image']) !== ''
             ? $content['home_feature_image']
             : $this->fields['home_feature_image'];
+        $content['home_logo_image'] = trim((string) $content['home_logo_image']);
 
         return view('admin.homepage.edit', ['content' => $content]);
     }
@@ -71,6 +73,8 @@ class HomepageContentController extends Controller
     {
         $data = $request->validate([
             'home_site_brand' => ['required', 'string', 'max:80'],
+            'home_logo_image' => ['nullable', 'image', 'max:4096'],
+            'home_logo_image_url' => ['nullable', 'string', 'max:500'],
             'home_phone' => ['required', 'string', 'max:40'],
             'home_hero_title' => ['required', 'string', 'max:255'],
             'home_hero_description' => ['required', 'string', 'max:500'],
@@ -116,11 +120,17 @@ class HomepageContentController extends Controller
         ]);
 
         foreach (array_keys($this->fields) as $key) {
-            if (in_array($key, ['home_hero_image', 'home_feature_image'], true)) {
+            if (in_array($key, ['home_logo_image', 'home_hero_image', 'home_feature_image'], true)) {
                 continue;
             }
 
             Setting::putValue($key, $data[$key] ?? '');
+        }
+
+        if ($request->hasFile('home_logo_image')) {
+            Setting::putValue('home_logo_image', $request->file('home_logo_image')->store('homepage', 'public'));
+        } elseif (array_key_exists('home_logo_image_url', $data)) {
+            Setting::putValue('home_logo_image', $data['home_logo_image_url'] ?? '');
         }
 
         if ($request->hasFile('home_hero_image')) {

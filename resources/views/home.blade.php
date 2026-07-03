@@ -7,6 +7,7 @@
     $sourceBase = 'https://mikrotikkenya.co.ke';
     $heroImage = $content['home_hero_image_url'] ?? $sourceBase.'/uploads/homepage-content/20260512190532-ffuavwjom9.webp';
     $brandText = $content['home_site_brand'] ?? 'Fiber Optics Kenya';
+    $logoImage = trim((string) ($content['home_logo_image_url'] ?? ''));
     $heroTitle = $content['home_hero_title'] ?? 'Fiber Optics Kenya | Buy Genuine Networking Devices';
     $heroDescription = $content['home_hero_description'] ?? 'Find affordable fiber optic cables, routers, switches, SFP modules, and networking accessories for reliable connectivity in East Africa.';
     $servicesTitle = $content['home_services_title'] ?? 'Products';
@@ -29,6 +30,7 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-header{background:#fff;border-bottom:1px solid #e5e7eb}
 .mk-header-inner{max-width:1760px;margin:0 auto;padding:12px 66px;display:grid;grid-template-columns:320px minmax(360px,1fr) 270px;gap:16px;align-items:center}
 .mk-logo{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;width:300px;height:112px;min-width:0;overflow:hidden;text-decoration:none;color:#0a4588}
+.mk-logo-img{display:block;max-width:260px;max-height:86px;width:auto;height:auto;object-fit:contain}
 .mk-logo-main{display:block;font-size:31px!important;line-height:1.05;font-weight:900;letter-spacing:0;color:#0a4588}
 .mk-logo-sub{display:block;margin-top:7px;font-size:12px!important;line-height:1.2;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1677ff}
 .mk-search{display:flex;gap:12px;align-items:center}
@@ -115,8 +117,12 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
     <header class="mk-header">
         <div class="mk-header-inner">
             <a class="mk-logo" href="{{ route('home') }}" aria-label="{{ $brandText }} home">
-                <span class="mk-logo-main">{{ $brandText }}</span>
-                <span class="mk-logo-sub">Networking & Connectivity</span>
+                @if($logoImage !== '')
+                    <img class="mk-logo-img" src="{{ $logoImage }}" alt="{{ $brandText }}">
+                @else
+                    <span class="mk-logo-main">{{ $brandText }}</span>
+                    <span class="mk-logo-sub">Networking & Connectivity</span>
+                @endif
             </a>
 
             <form class="mk-search" action="{{ route('home') }}" method="get">

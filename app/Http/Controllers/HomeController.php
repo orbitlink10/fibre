@@ -14,6 +14,7 @@ class HomeController extends Controller
     {
         $defaults = [
             'home_site_brand' => 'Fiber Optics Kenya',
+            'home_logo_image' => '',
             'home_phone' => '+254 704 991 492',
             'home_hero_title' => "Fast\nFiber Optic Internet\nwith Reliable Support\nin Kenya.",
             'home_hero_description' => 'High-speed networking products and installation support',
@@ -63,6 +64,10 @@ class HomeController extends Controller
         $content['home_feature_image'] = trim((string) $content['home_feature_image']) !== ''
             ? $content['home_feature_image']
             : $defaults['home_feature_image'];
+        $content['home_logo_image'] = trim((string) $content['home_logo_image']);
+        $content['home_logo_image_url'] = $content['home_logo_image'] !== ''
+            ? $this->imageUrl($content['home_logo_image'])
+            : '';
         $content['home_hero_image_url'] = $this->imageUrl($content['home_hero_image']);
         $content['home_feature_image_url'] = $this->imageUrl($content['home_feature_image']);
         $content['home_phone_href'] = 'tel:'.preg_replace('/\D+/', '', (string) $content['home_phone']);

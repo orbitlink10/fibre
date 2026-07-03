@@ -39,6 +39,8 @@
     $currentHeroImageUrl = $homepageImageUrl($currentHeroImage);
     $currentFeatureImage = $content['home_feature_image'];
     $currentFeatureImageUrl = $homepageImageUrl($currentFeatureImage);
+    $currentLogoImage = $content['home_logo_image'] ?? '';
+    $currentLogoImageUrl = trim((string) $currentLogoImage) !== '' ? $homepageImageUrl($currentLogoImage) : '';
 @endphp
 
 <div class="adminlte-content-wrapper">
@@ -85,6 +87,16 @@
                                             <input type="text" class="form-control" name="home_phone" value="{{ old('home_phone', $content['home_phone']) }}" id="home_phone" required>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="home_logo_image">Logo Image</label>
+                                    <input type="file" class="form-control" name="home_logo_image" id="home_logo_image" accept="image/*">
+                                    <input type="text" class="form-control mt-2" name="home_logo_image_url" value="{{ old('home_logo_image_url', $content['home_logo_image'] ?? '') }}" placeholder="Or paste a logo URL">
+                                    <small class="text-muted">Current value: {{ ($content['home_logo_image'] ?? '') ?: 'No logo saved yet' }}</small>
+                                    @if($currentLogoImageUrl !== '')
+                                        <img src="{{ $currentLogoImageUrl }}" alt="Current logo image" class="homepage-logo-preview">
+                                    @endif
                                 </div>
 
                                 <h4 class="homepage-section-title">Hero</h4>
@@ -278,6 +290,17 @@
         max-height: 260px;
         object-fit: cover;
         margin-top: 12px;
+    }
+    .homepage-logo-preview {
+        display: block;
+        max-width: 260px;
+        max-height: 120px;
+        object-fit: contain;
+        margin-top: 12px;
+        padding: 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background: #fff;
     }
     .homepage-section-title {
         margin: 28px 0 14px;
