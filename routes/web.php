@@ -14,15 +14,22 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController as PublicProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/shop/{product:slug}', [PublicProductController::class, 'show'])->name('products.show');
+Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
+Route::post('/cart/items/{product}', [CartController::class, 'store'])->name('cart.items.store');
+Route::patch('/cart/items/{product}', [CartController::class, 'update'])->name('cart.items.update');
+Route::delete('/cart/items/{product}', [CartController::class, 'destroy'])->name('cart.items.destroy');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

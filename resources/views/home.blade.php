@@ -12,6 +12,7 @@
     $heroDescription = $content['home_hero_description'] ?? 'Find affordable fiber optic cables, routers, switches, SFP modules, and networking accessories for reliable connectivity in East Africa.';
     $servicesTitle = $content['home_services_title'] ?? 'Products';
     $servicesSubtitle = $content['home_services_subtitle'] ?? 'Fiber optic products, networking equipment, and installation support across Kenya.';
+    $cartCount = collect(session('cart', []))->sum();
     $visibleCategories = $categories->take(24);
     $fallbackProducts = collect([
         ['name' => 'Mikrotik Intercell 10 B38+B39', 'price' => 85000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092341-vsplsq9n5r.jpg'],
@@ -61,7 +62,9 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-card h2 a{color:inherit;text-decoration:none}
 .mk-store-name{font-size:13px!important;line-height:1.35;color:#6b7280;margin:0 0 8px}
 .mk-price{font-size:16px!important;line-height:1.2;color:#0a4588;font-weight:700;margin:0 0 10px}
+.mk-card-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .mk-card-action{min-height:40px;font-size:14px!important;padding:0 14px}
+.mk-card-action.secondary{background:#eef2f7;color:#0a4588}
 .mk-empty{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:32px;font-size:18px;color:#475467}
 .mk-section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 16px}
 .mk-section-head h2{font-size:28px!important;line-height:1.15;margin:0;color:#031532;font-weight:850;white-space:pre-line}
@@ -137,7 +140,7 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
                 <a href="{{ $content['home_phone_href'] ?? '#' }}"><strong>{{ $content['home_phone'] ?? '' }}</strong></a>
                 <a href="{{ route('login') }}">Login</a>
                 <a href="{{ route('register') }}"><strong>Register</strong></a>
-                <a href="{{ route('home') }}"><strong>Cart (0)</strong></a>
+                <a href="{{ route('cart.show') }}"><strong>Cart ({{ $cartCount }})</strong></a>
             </nav>
         </div>
     </header>
@@ -181,10 +184,16 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
                                 <img src="{{ $product->homepage_image_url }}" alt="{{ $product->name }}">
                             </div>
                             <div class="mk-card-body">
-                                <h2><a href="{{ route('home', ['search' => $product->name]) }}">{{ $product->name }}</a></h2>
+                                <h2><a href="{{ route('products.show', ['product' => $product->slug]) }}">{{ $product->name }}</a></h2>
                                 <p class="mk-store-name">{{ $product->category?->name ?? 'Almar Market Official Store' }}</p>
                                 <p class="mk-price">KSh {{ number_format((float) $product->price, 2) }}</p>
-                                <a class="mk-card-action" href="{{ route('home', ['search' => $product->name]) }}">View</a>
+                                <div class="mk-card-actions">
+                                    <a class="mk-card-action secondary" href="{{ route('products.show', ['product' => $product->slug]) }}">View</a>
+                                    <form method="post" action="{{ route('cart.items.store', $product) }}">
+                                        @csrf
+                                        <button class="mk-card-action" type="submit">Add to cart</button>
+                                    </form>
+                                </div>
                             </div>
                         </article>
                     @endforeach
