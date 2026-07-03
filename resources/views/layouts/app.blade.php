@@ -67,7 +67,8 @@
         .page-starlink-navigation { position:sticky; top:0; z-index:30; background:#fff; box-shadow:0 8px 30px rgba(16,24,40,.08); }
         .starlink-menu-bar{display:grid;grid-template-columns:auto auto 1fr auto auto;align-items:center;gap:34px;min-height:88px;padding:0 40px;color:#334155;font-family:Arial,Helvetica,sans-serif}
         .starlink-brand,.starlink-menu-link,.starlink-call,.starlink-audience-link,.starlink-menu-icon{color:#334155;text-decoration:none}
-        .starlink-brand{font-size:27px;font-weight:700;letter-spacing:8px;line-height:1;text-transform:uppercase;white-space:nowrap}
+        .starlink-brand{display:inline-flex;align-items:center;min-height:88px;font-size:27px;font-weight:700;letter-spacing:8px;line-height:1;text-transform:uppercase;white-space:nowrap}
+        .starlink-brand-logo{display:block;max-width:330px;max-height:72px;width:auto;height:auto;object-fit:contain}
         .starlink-primary-links{display:flex;align-items:center;gap:36px}
         .starlink-menu-link{font-size:18px;font-weight:700;line-height:1;text-transform:none;white-space:nowrap}
         .starlink-menu-link--dropdown::after{content:"";display:inline-block;width:0;height:0;margin-left:8px;vertical-align:middle;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}
@@ -82,7 +83,8 @@
             .footer-services { columns:1; }
             .footer-social { margin-bottom:24px; }
             .starlink-menu-bar{grid-template-columns:auto 1fr auto;min-height:76px;padding:0 22px;gap:18px}
-            .starlink-brand{font-size:23px;letter-spacing:6px}
+            .starlink-brand{min-height:76px;font-size:23px;letter-spacing:6px}
+            .starlink-brand-logo{max-width:230px;max-height:58px}
             .starlink-primary-links,.starlink-call,.starlink-audience-toggle{display:none}
             .starlink-menu-icon{justify-self:end}
         }
@@ -99,6 +101,26 @@
 @else
 @php
     $pageBrand = \App\Models\Setting::valueFor('home_site_brand', 'Fiber Optics Kenya') ?: 'Fiber Optics Kenya';
+    $pageLogo = trim((string) \App\Models\Setting::valueFor('home_logo_image', ''));
+    $pageLogoUrl = '';
+    if ($pageLogo !== '') {
+        $pageLogoPath = parse_url($pageLogo, PHP_URL_PATH);
+        $pageLogoHost = parse_url($pageLogo, PHP_URL_HOST);
+        $pageAppHost = parse_url((string) config('app.url'), PHP_URL_HOST);
+        $pageRequestHost = request()->getHost();
+
+        if (is_string($pageLogoPath) && str_starts_with($pageLogoPath, '/storage/') && $pageLogoHost && in_array($pageLogoHost, array_filter([$pageAppHost, $pageRequestHost]), true)) {
+            $pageLogoUrl = route('pages.image', ['path' => str_replace('storage/', '', ltrim($pageLogoPath, '/'))]);
+        } elseif (str_starts_with($pageLogo, 'http://') || str_starts_with($pageLogo, 'https://') || str_starts_with($pageLogo, '//')) {
+            $pageLogoUrl = $pageLogo;
+        } elseif (str_starts_with($pageLogo, '/storage/')) {
+            $pageLogoUrl = route('pages.image', ['path' => str_replace('storage/', '', ltrim($pageLogo, '/'))]);
+        } elseif (str_starts_with($pageLogo, 'storage/')) {
+            $pageLogoUrl = route('pages.image', ['path' => str_replace('storage/', '', $pageLogo)]);
+        } else {
+            $pageLogoUrl = route('pages.image', ['path' => ltrim($pageLogo, '/')]);
+        }
+    }
     $pagePhone = \App\Models\Setting::valueFor('home_phone', '+254 704 991 492') ?: '+254 704 991 492';
     $pagePhoneHref = 'tel:'.preg_replace('/\D+/', '', $pagePhone);
     $pagePrimaryMenu = json_decode((string) \App\Models\Setting::valueFor('home_primary_menu', ''), true);
@@ -116,7 +138,13 @@
 @endphp
 <nav id="site-navigation" class="page-starlink-navigation" role="navigation" aria-label="Primary menu">
     <div class="starlink-menu-bar">
-        <a class="starlink-brand" href="{{ route('home') }}" rel="home" aria-label="{{ $pageBrand }} home">{{ $pageBrand }}</a>
+        <a class="starlink-brand" href="{{ route('home') }}" rel="home" aria-label="{{ $pageBrand }} home">
+            @if($pageLogoUrl !== '')
+                <img class="starlink-brand-logo" src="{{ $pageLogoUrl }}" alt="{{ $pageBrand }}">
+            @else
+                {{ $pageBrand }}
+            @endif
+        </a>
         <div class="starlink-primary-links" aria-label="Service menu">
             @foreach($pagePrimaryMenu as $item)
                 @if(! empty($item['label']))

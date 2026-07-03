@@ -28,9 +28,9 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-store{min-height:100vh;background:#f6f7fb;color:#111827;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
 .mk-topbar{height:auto;min-height:42px;padding:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#0a4588,#1677ff);color:#fff;font-size:16px!important;line-height:1.35;font-weight:600;text-align:center}
 .mk-header{background:#fff;border-bottom:1px solid #e5e7eb}
-.mk-header-inner{max-width:1760px;margin:0 auto;padding:12px 66px;display:grid;grid-template-columns:320px minmax(360px,1fr) 270px;gap:16px;align-items:center}
-.mk-logo{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;width:300px;height:112px;min-width:0;overflow:hidden;text-decoration:none;color:#0a4588}
-.mk-logo-img{display:block;max-width:260px;max-height:86px;width:auto;height:auto;object-fit:contain}
+.mk-header-inner{max-width:1760px;margin:0 auto;padding:12px 66px;display:grid;grid-template-columns:420px minmax(360px,1fr) 270px;gap:16px;align-items:center}
+.mk-logo{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;width:400px;height:150px;min-width:0;overflow:hidden;text-decoration:none;color:#0a4588}
+.mk-logo-img{display:block;max-width:380px;max-height:128px;width:auto;height:auto;object-fit:contain}
 .mk-logo-main{display:block;font-size:31px!important;line-height:1.05;font-weight:900;letter-spacing:0;color:#0a4588}
 .mk-logo-sub{display:block;margin-top:7px;font-size:12px!important;line-height:1.2;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1677ff}
 .mk-search{display:flex;gap:12px;align-items:center}
@@ -79,8 +79,9 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-long-content p{margin:0 0 16px}
 .mk-long-content a{color:#0a4588;font-weight:700}
 @media(max-width:1100px){
-    .mk-header-inner{grid-template-columns:240px minmax(280px,1fr);padding:12px 26px;gap:16px}
-    .mk-logo{width:260px}
+    .mk-header-inner{grid-template-columns:320px minmax(280px,1fr);padding:12px 26px;gap:16px}
+    .mk-logo{width:310px;height:120px}
+    .mk-logo-img{max-width:300px;max-height:102px}
     .mk-account{grid-column:1/-1;justify-content:flex-end}
     .mk-main{grid-template-columns:280px minmax(0,1fr);padding:18px 26px}
     .mk-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -89,7 +90,8 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 @media(max-width:900px){
     .mk-topbar{height:auto;min-height:52px;padding:10px 18px;font-size:17px}
     .mk-header-inner{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:14px 22px}
-    .mk-logo{justify-content:center;width:min(320px,100%);margin:0 auto}
+    .mk-logo{justify-content:center;align-items:center;width:min(380px,100%);height:128px;margin:0 auto}
+    .mk-logo-img{max-width:min(360px,100%);max-height:112px}
     .mk-search{flex-direction:column}
     .mk-search button{width:100%}
     .mk-account{justify-content:center;font-size:16px;flex-wrap:wrap}
@@ -104,7 +106,8 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
     .mk-section-head p{margin-top:8px}
 }
 @media(max-width:560px){
-    .mk-logo{width:min(240px,100%);height:88px}
+    .mk-logo{width:min(320px,100%);height:112px}
+    .mk-logo-img{max-width:min(300px,100%);max-height:96px}
     .mk-search input{height:54px;font-size:16px!important}
     .mk-grid{grid-template-columns:1fr}
     .mk-card-media{height:180px}
