@@ -41,7 +41,7 @@
                             <td><img class="img-thumbnail" src="{{ $imageUrl($category->icon) }}" alt="{{ $category->name }}" style="width:100px;height:64px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/140x90?text=No+Photo';"></td>
                             <td>
                                 <div class="d-flex flex-wrap gap-1">
-                                    <a class="btn btn-sm btn-info text-white rounded-pill px-3" href="{{ route('admin.products.index', ['search' => $category->name]) }}">Show</a>
+                                    <a class="btn btn-sm btn-info text-white rounded-pill px-3" href="{{ route('categories.show', ['category' => $category->slug]) }}" target="_blank" rel="noopener">Preview</a>
                                     <a class="btn btn-sm btn-warning rounded-pill px-3" href="{{ route('admin.categories.edit', $category) }}">Edit</a>
                                     <form method="post" action="{{ route('admin.categories.destroy', $category) }}">
                                         @csrf
