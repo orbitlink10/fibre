@@ -27,11 +27,9 @@
     .category-benefits { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
     .category-benefit { display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:0 18px; border:1px solid #d9e0ea; border-radius:999px; background:rgba(255,255,255,.86); color:#071226; font-size:17px; font-weight:750; box-shadow:0 12px 26px rgba(15,23,42,.07); }
     .category-benefit i { color:#ff8310; font-size:18px; }
-    .category-summary { border-radius:28px; background:rgba(255,255,255,.92); padding:28px; box-shadow:0 24px 70px rgba(15,23,42,.14); }
-    .category-count-card { display:flex; align-items:center; justify-content:space-between; min-height:74px; margin-bottom:24px; padding:0 22px; border:1px solid #dbe3ee; border-radius:16px; background:#f2f6fc; }
-    .category-count-card span { color:#607493; font-size:16px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
-    .category-count-card strong { color:#071226; font-size:34px; line-height:1; font-weight:900; }
-    .category-summary img { display:block; width:190px; max-width:100%; aspect-ratio:1 / 1; object-fit:cover; border-radius:26px; margin-bottom:26px; }
+    .category-summary { display:flex; flex-direction:column; min-height:520px; border-radius:28px; background:rgba(255,255,255,.92); padding:28px; box-shadow:0 24px 70px rgba(15,23,42,.14); }
+    .category-summary h3 { margin:0 0 18px; color:#071226; font-size:28px; line-height:1.2; font-weight:850; }
+    .category-summary img { display:block; width:100%; min-height:0; flex:1; object-fit:cover; border-radius:22px; }
     .category-content { background:#fff; padding:68px 20px; }
     .category-content-shell { max-width:1120px; margin:0 auto; }
     .category-content-card { border:1px solid #e0e6ee; border-radius:18px; background:#fff; padding:38px; color:#243d62; font-size:18px; line-height:1.75; box-shadow:0 16px 34px rgba(15,23,42,.05); }
@@ -89,11 +87,8 @@
                 </div>
             </section>
 
-            <aside class="category-summary" aria-label="Category summary">
-                <div class="category-count-card">
-                    <span>Products</span>
-                    <strong>{{ $products->total() }}</strong>
-                </div>
+            <aside class="category-summary" aria-label="Category image">
+                <h3>{{ $category->name }}</h3>
                 <img src="{{ $category->public_image_url }}" alt="{{ $category->name }}">
             </aside>
         </div>
