@@ -14,6 +14,11 @@
     $servicesSubtitle = $content['home_services_subtitle'] ?? 'Fiber optic products, networking equipment, and installation support across Kenya.';
     $cartCount = collect(session('cart', []))->sum();
     $visibleCategories = $categories->take(24);
+    $primaryMenu = $content['home_primary_menu'] ?? [
+        ['label' => 'Residential', 'url' => '#residential', 'has_dropdown' => true],
+        ['label' => 'Roam', 'url' => '#roam', 'has_dropdown' => false],
+        ['label' => 'Shop', 'url' => '#kits', 'has_dropdown' => true],
+    ];
     $fallbackProducts = collect([
         ['name' => 'Mikrotik Intercell 10 B38+B39', 'price' => 85000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092341-vsplsq9n5r.jpg'],
         ['name' => 'Mikrotik mANT LTE 5o with R11e-LTE', 'price' => 25000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092452-wkv4mqomfy.jpg'],
@@ -27,19 +32,23 @@ html,body{margin:0!important;padding:0!important;overflow-x:hidden!important}
 *,*::before,*::after{box-sizing:border-box}
 body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;background:#f6f7fb!important;color:#111827!important}
 .mk-store{min-height:100vh;background:#f6f7fb;color:#111827;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif}
-.mk-topbar{height:auto;min-height:42px;padding:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#0a4588,#1677ff);color:#fff;font-size:16px!important;line-height:1.35;font-weight:600;text-align:center}
-.mk-header{background:#fff;border-bottom:1px solid #e5e7eb}
-.mk-header-inner{max-width:1760px;margin:0 auto;padding:12px 66px;display:grid;grid-template-columns:420px minmax(360px,1fr) 270px;gap:16px;align-items:center}
-.mk-logo{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;width:400px;height:150px;min-width:0;overflow:hidden;text-decoration:none;color:#0a4588}
-.mk-logo-img{display:block;max-width:380px;max-height:128px;width:auto;height:auto;object-fit:contain}
+.mk-topbar{min-height:44px;padding:8px 24px;display:flex;align-items:center;justify-content:center;background:#0a4588;color:#fff;font-size:15px!important;line-height:1.35;font-weight:700;text-align:center}
+.mk-topbar a{color:#ff9b24;text-decoration:none}
+.mk-header{background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 8px 24px rgba(15,23,42,.04)}
+.mk-header-inner{max-width:1760px;margin:0 auto;padding:18px 66px;display:grid;grid-template-columns:auto auto minmax(300px,520px) auto;gap:28px;align-items:center}
+.mk-logo{display:inline-flex;align-items:center;justify-content:flex-start;width:220px;min-width:220px;height:82px;overflow:hidden;text-decoration:none;color:#0a4588}
+.mk-logo-img{display:block;max-width:210px;max-height:72px;width:auto;height:auto;object-fit:contain}
 .mk-logo-main{display:block;font-size:31px!important;line-height:1.05;font-weight:900;letter-spacing:0;color:#0a4588}
 .mk-logo-sub{display:block;margin-top:7px;font-size:12px!important;line-height:1.2;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1677ff}
-.mk-search{display:flex;gap:12px;align-items:center}
-.mk-search input{width:100%;height:56px;border:1px solid #e5e7eb;border-radius:10px;padding:0 18px;font-size:18px!important;font-weight:400;color:#111827;outline:none;background:#fff}
+.mk-nav{display:flex;align-items:center;gap:34px;min-width:0}
+.mk-nav a{display:inline-flex;align-items:center;gap:8px;color:#020b1c;text-decoration:none;font-size:18px!important;line-height:1;font-weight:800;white-space:nowrap}
+.mk-nav a[data-dropdown="1"]::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}
+.mk-search{display:flex;gap:8px;align-items:center;min-width:0}
+.mk-search input{width:100%;height:48px;border:1px solid #dfe5ee;border-radius:10px;padding:0 16px;font-size:16px!important;font-weight:400;color:#111827;outline:none;background:#fff}
 .mk-search input::placeholder{color:#6b7280;opacity:1}
 .mk-search input:focus{border-color:#1677ff;box-shadow:0 0 0 4px rgba(22,119,255,.12)}
-.mk-search button,.mk-card-action{border:0;border-radius:10px;background:#1677ff;color:#fff;font-size:16px!important;font-weight:700;min-height:56px;padding:0 22px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-.mk-account{display:flex;align-items:center;justify-content:flex-end;gap:15px;font-size:16px!important;white-space:nowrap}
+.mk-search button,.mk-card-action{border:0;border-radius:10px;background:#1677ff;color:#fff;font-size:15px!important;font-weight:800;min-height:48px;padding:0 20px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.mk-account{display:flex;align-items:center;justify-content:flex-end;gap:18px;font-size:16px!important;white-space:nowrap}
 .mk-account a{color:#020b1c;text-decoration:none}
 .mk-account strong{font-weight:700}
 .mk-main{max-width:1760px;margin:0 auto;padding:18px 66px 56px;display:grid;grid-template-columns:390px minmax(0,1fr);gap:18px}
@@ -82,19 +91,23 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-long-content p{margin:0 0 16px}
 .mk-long-content a{color:#0a4588;font-weight:700}
 @media(max-width:1100px){
-    .mk-header-inner{grid-template-columns:320px minmax(280px,1fr);padding:12px 26px;gap:16px}
-    .mk-logo{width:310px;height:120px}
-    .mk-logo-img{max-width:300px;max-height:102px}
-    .mk-account{grid-column:1/-1;justify-content:flex-end}
+    .mk-header-inner{grid-template-columns:auto 1fr;gap:16px;padding:16px 26px}
+    .mk-logo{width:190px;min-width:190px;height:72px}
+    .mk-logo-img{max-width:180px;max-height:64px}
+    .mk-nav{justify-content:flex-end;gap:22px}
+    .mk-search,.mk-account{grid-column:1/-1}
+    .mk-account{justify-content:flex-end}
     .mk-main{grid-template-columns:280px minmax(0,1fr);padding:18px 26px}
     .mk-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
     .mk-info{grid-template-columns:1fr}
 }
 @media(max-width:900px){
-    .mk-topbar{height:auto;min-height:52px;padding:10px 18px;font-size:17px}
+    .mk-topbar{min-height:44px;padding:9px 18px;font-size:14px!important}
     .mk-header-inner{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:14px 22px}
-    .mk-logo{justify-content:center;align-items:center;width:min(380px,100%);height:128px;margin:0 auto}
-    .mk-logo-img{max-width:min(360px,100%);max-height:112px}
+    .mk-logo{justify-content:center;align-items:center;width:min(240px,100%);min-width:0;height:78px;margin:0 auto}
+    .mk-logo-img{max-width:min(230px,100%);max-height:70px}
+    .mk-nav{justify-content:center;gap:20px;flex-wrap:wrap}
+    .mk-nav a{font-size:16px!important}
     .mk-search{flex-direction:column}
     .mk-search button{width:100%}
     .mk-account{justify-content:center;font-size:16px;flex-wrap:wrap}
@@ -109,8 +122,8 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
     .mk-section-head p{margin-top:8px}
 }
 @media(max-width:560px){
-    .mk-logo{width:min(320px,100%);height:112px}
-    .mk-logo-img{max-width:min(300px,100%);max-height:96px}
+    .mk-logo{width:min(220px,100%);height:68px}
+    .mk-logo-img{max-width:min(210px,100%);max-height:62px}
     .mk-search input{height:54px;font-size:16px!important}
     .mk-grid{grid-template-columns:1fr}
     .mk-card-media{height:180px}
@@ -118,7 +131,9 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 </style>
 
 <div class="mk-store">
-    <div class="mk-topbar">{{ $brandText }}</div>
+    <div class="mk-topbar">
+        Call us on <a href="{{ $content['home_phone_href'] ?? '#' }}">{{ $content['home_phone'] ?? '+254 704 991 492' }}</a>
+    </div>
 
     <header class="mk-header">
         <div class="mk-header-inner">
@@ -131,13 +146,20 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
                 @endif
             </a>
 
+            <nav class="mk-nav" aria-label="Primary navigation">
+                @foreach($primaryMenu as $item)
+                    @if(! empty($item['label']))
+                        <a href="{{ $item['url'] ?? '#' }}" data-dropdown="{{ ! empty($item['has_dropdown']) ? '1' : '0' }}">{{ $item['label'] }}</a>
+                    @endif
+                @endforeach
+            </nav>
+
             <form class="mk-search" action="{{ route('home') }}" method="get">
                 <input type="search" name="search" value="{{ $search }}" placeholder="Search products, brands and categories" aria-label="Search products, brands and categories">
                 <button type="submit">Search</button>
             </form>
 
             <nav class="mk-account" aria-label="Account links">
-                <a href="{{ $content['home_phone_href'] ?? '#' }}"><strong>{{ $content['home_phone'] ?? '' }}</strong></a>
                 <a href="{{ route('login') }}">Login</a>
                 <a href="{{ route('register') }}"><strong>Register</strong></a>
                 <a href="{{ route('cart.show') }}"><strong>Cart ({{ $cartCount }})</strong></a>
