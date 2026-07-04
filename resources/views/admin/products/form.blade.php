@@ -90,14 +90,6 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Slug</label>
-                        <input class="form-control" name="slug" value="{{ old('slug', $product->slug) }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Image URL</label>
-                        <input class="form-control" name="image" value="{{ old('image', $product->image) }}">
-                    </div>
-                    <div class="col-md-6">
                         <label class="form-label">Upload Image</label>
                         <input class="form-control" type="file" name="image_file" accept="image/*">
                     </div>

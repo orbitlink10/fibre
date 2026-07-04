@@ -43,12 +43,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $data = $this->validated($request);
-        $data['slug'] = Str::slug($data['slug'] ?: $data['name']);
+        $data['slug'] = $this->uniqueSlug($data['name']);
         $data['marked_price'] = $data['marked_price'] ?: 0;
         $data['quantity'] = $data['quantity'] ?: 0;
         $data['subcategory'] = $data['subcategory'] ?: null;
         $data['meta_description'] = $data['meta_description'] ?: null;
         $data['description'] = $data['description'] ?: null;
+        $data['image'] = null;
         $data['google_merchant'] = $request->boolean('google_merchant');
 
         if ($request->hasFile('image_file')) {
@@ -75,12 +76,13 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $data = $this->validated($request, $product);
-        $data['slug'] = Str::slug($data['slug'] ?: $data['name']);
+        $data['slug'] = $this->uniqueSlug($data['name'], $product);
         $data['marked_price'] = $data['marked_price'] ?: 0;
         $data['quantity'] = $data['quantity'] ?: 0;
         $data['subcategory'] = $data['subcategory'] ?: null;
         $data['meta_description'] = $data['meta_description'] ?: null;
         $data['description'] = $data['description'] ?: null;
+        $data['image'] = $product->image;
         $data['google_merchant'] = $request->boolean('google_merchant');
 
         if ($request->hasFile('image_file')) {
@@ -101,21 +103,32 @@ class ProductController extends Controller
 
     private function validated(Request $request, ?Product $product = null): array
     {
-        $id = $product?->id ?? 'NULL';
-
         return $request->validate([
             'category_id' => ['required', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:255'],
-            'slug' => ['nullable', 'string', 'max:255', 'unique:products,slug,'.$id],
             'price' => ['required', 'numeric', 'min:0'],
             'marked_price' => ['nullable', 'numeric', 'min:0'],
             'quantity' => ['nullable', 'integer', 'min:0'],
             'subcategory' => ['nullable', 'string', 'max:255'],
             'google_merchant' => ['nullable', 'boolean'],
-            'image' => ['nullable', 'url', 'max:2048'],
             'image_file' => ['nullable', 'image', 'max:4096'],
             'meta_description' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
         ]);
+    }
+
+    private function uniqueSlug(string $name, ?Product $product = null): string
+    {
+        $base = Str::slug($name) ?: 'product';
+        $slug = $base;
+        $counter = 1;
+
+        while (Product::where('slug', $slug)
+            ->when($product, fn ($query) => $query->whereKeyNot($product->getKey()))
+            ->exists()) {
+            $slug = $base.'-'.$counter++;
+        }
+
+        return $slug;
     }
 }
