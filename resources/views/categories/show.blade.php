@@ -33,6 +33,14 @@
     .category-count-card strong { color:#071226; font-size:34px; line-height:1; font-weight:900; }
     .category-summary img { display:block; width:190px; max-width:100%; aspect-ratio:1 / 1; object-fit:cover; border-radius:26px; margin-bottom:26px; }
     .category-summary p { margin:0; color:#344967; font-size:20px; line-height:1.45; }
+    .category-content { background:#fff; padding:68px 20px; }
+    .category-content-shell { max-width:1120px; margin:0 auto; }
+    .category-content-card { border:1px solid #e0e6ee; border-radius:18px; background:#fff; padding:38px; color:#243d62; font-size:18px; line-height:1.75; box-shadow:0 16px 34px rgba(15,23,42,.05); }
+    .category-content-card h1, .category-content-card h2, .category-content-card h3, .category-content-card h4 { color:#071226; font-weight:850; line-height:1.15; margin:28px 0 14px; }
+    .category-content-card h1:first-child, .category-content-card h2:first-child, .category-content-card h3:first-child, .category-content-card h4:first-child { margin-top:0; }
+    .category-content-card p { margin:0 0 16px; }
+    .category-content-card ul, .category-content-card ol { margin:0 0 18px; padding-left:24px; }
+    .category-content-card a { color:#0a4588; font-weight:800; }
     .category-products { background:#f8fafc; padding:72px 20px 86px; }
     .category-products-shell { max-width:1420px; margin:0 auto; }
     .category-products-head { display:grid; grid-template-columns:minmax(0, 1fr) auto; gap:24px; align-items:end; margin-bottom:30px; }
@@ -50,7 +58,7 @@
     .category-empty { border:1px solid #e0e6ee; border-radius:18px; background:#fff; padding:34px; color:#607493; font-size:18px; }
     @media(max-width:1180px){ .category-hero{grid-template-columns:1fr;} .category-summary{max-width:620px;} .category-grid{grid-template-columns:repeat(3, minmax(0, 1fr));} }
     @media(max-width:860px){ .category-page{padding:40px 16px 56px;} .category-products{padding:52px 16px 66px;} .category-products-head{grid-template-columns:1fr;} .category-showing{flex-wrap:wrap; white-space:normal;} .category-grid{grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px;} }
-    @media(max-width:560px){ .category-title{font-size:38px;} .category-description{font-size:18px;} .category-summary{padding:20px; border-radius:20px;} .category-grid{grid-template-columns:1fr;} .category-product h3{font-size:18px;} }
+    @media(max-width:560px){ .category-title{font-size:38px;} .category-description{font-size:18px;} .category-summary{padding:20px; border-radius:20px;} .category-content{padding:46px 16px;} .category-content-card{padding:24px;} .category-grid{grid-template-columns:1fr;} .category-product h3{font-size:18px;} }
 </style>
 
 <section class="category-page">
@@ -93,6 +101,16 @@
         </div>
     </div>
 </section>
+
+@if(trim((string) $category->description) !== '')
+    <section class="category-content">
+        <div class="category-content-shell">
+            <article class="category-content-card">
+                {!! $category->description !!}
+            </article>
+        </div>
+    </section>
+@endif
 
 <section id="category-products" class="category-products">
     <div class="category-products-shell">
