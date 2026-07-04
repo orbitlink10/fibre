@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\FiberToolController as AdminFiberToolController;
 use App\Http\Controllers\Admin\HomepageContentController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\OrderController;
@@ -77,6 +78,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/bookings/{booking}/assign', [AssignmentController::class, 'edit'])->name('assignments.edit');
         Route::patch('/bookings/{booking}/assign', [AssignmentController::class, 'update'])->name('assignments.update');
         Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/fiber-tools', [AdminFiberToolController::class, 'index'])->name('fiber-tools.index');
     });
 
     Route::middleware('role:admin,dispatcher')->name('admin.')->group(function () {

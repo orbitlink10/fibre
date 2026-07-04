@@ -111,6 +111,10 @@
                     <span class="sidebar-icon"><i class="bi bi-list"></i></span>
                     <span>Menu</span>
                 </a>
+                <a class="sidebar-link {{ request()->routeIs('admin.fiber-tools.*') ? 'active' : '' }}" href="{{ route('admin.fiber-tools.index') }}">
+                    <span class="sidebar-icon"><i class="bi bi-diagram-3"></i></span>
+                    <span>Fiber Tools</span>
+                </a>
                 <a class="sidebar-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">
                     <span class="sidebar-icon"><i class="bi bi-grid-3x3-gap"></i></span>
                     <span>Categories</span>
