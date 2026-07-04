@@ -32,7 +32,6 @@
     .category-count-card span { color:#607493; font-size:16px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
     .category-count-card strong { color:#071226; font-size:34px; line-height:1; font-weight:900; }
     .category-summary img { display:block; width:190px; max-width:100%; aspect-ratio:1 / 1; object-fit:cover; border-radius:26px; margin-bottom:26px; }
-    .category-summary p { margin:0; color:#344967; font-size:20px; line-height:1.45; }
     .category-content { background:#fff; padding:68px 20px; }
     .category-content-shell { max-width:1120px; margin:0 auto; }
     .category-content-card { border:1px solid #e0e6ee; border-radius:18px; background:#fff; padding:38px; color:#243d62; font-size:18px; line-height:1.75; box-shadow:0 16px 34px rgba(15,23,42,.05); }
@@ -96,7 +95,6 @@
                     <strong>{{ $products->total() }}</strong>
                 </div>
                 <img src="{{ $category->public_image_url }}" alt="{{ $category->name }}">
-                <p>{{ $categoryIntro }}</p>
             </aside>
         </div>
     </div>
