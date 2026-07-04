@@ -19,6 +19,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CategoryController as PublicCategoryController;
+use App\Http\Controllers\FiberToolController;
 use App\Http\Controllers\ProductController as PublicProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
@@ -29,6 +30,11 @@ Route::get('/', HomeController::class)->name('home');
 Route::get('/shop/{product:slug}', [PublicProductController::class, 'show'])->name('products.show');
 Route::get('/category/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');
 Route::get('/categories/{category:slug}', fn (App\Models\Category $category) => redirect()->route('categories.show', ['category' => $category->slug], 301));
+foreach (FiberToolController::slugs() as $fiberToolSlug) {
+    Route::get('/'.$fiberToolSlug, [FiberToolController::class, 'show'])
+        ->defaults('slug', $fiberToolSlug)
+        ->name('tools.'.$fiberToolSlug);
+}
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
 Route::post('/cart/items/{product}', [CartController::class, 'store'])->name('cart.items.store');
 Route::patch('/cart/items/{product}', [CartController::class, 'update'])->name('cart.items.update');
