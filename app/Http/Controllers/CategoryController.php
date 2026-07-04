@@ -17,7 +17,7 @@ class CategoryController extends Controller
         $products = Product::query()
             ->whereBelongsTo($category)
             ->latest()
-            ->paginate(24)
+            ->paginate(12)
             ->through(function (Product $product) {
                 $product->public_image_url = $this->imageUrl($product->image, 'Product');
 

@@ -27,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/shop/{product:slug}', [PublicProductController::class, 'show'])->name('products.show');
-Route::get('/categories/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');
+Route::get('/category/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');
+Route::get('/categories/{category:slug}', fn (App\Models\Category $category) => redirect()->route('categories.show', ['category' => $category->slug], 301));
 Route::get('/cart', [CartController::class, 'show'])->name('cart.show');
 Route::post('/cart/items/{product}', [CartController::class, 'store'])->name('cart.items.store');
 Route::patch('/cart/items/{product}', [CartController::class, 'update'])->name('cart.items.update');
@@ -101,5 +102,5 @@ Route::get('/uploaded-images/{path}', function (string $path) {
         ->header('Cache-Control', 'public, max-age=604800');
 })->where('path', '.*')->name('media.image');
 Route::get('/{slug}', [PageController::class, 'preview'])
-    ->where('slug', '^(?!admin|bookings|categories|customers|dashboard|forgot-password|login|logout|new-post|orders|page|pages|password|products|profile|register|storage|testimonials).+')
+    ->where('slug', '^(?!admin|bookings|category|categories|customers|dashboard|forgot-password|login|logout|new-post|orders|page|pages|password|products|profile|register|storage|testimonials).+')
     ->name('pages.preview');
