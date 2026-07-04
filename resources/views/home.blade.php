@@ -19,6 +19,13 @@
         ['label' => 'Roam', 'url' => '#roam', 'has_dropdown' => false],
         ['label' => 'Shop', 'url' => '#kits', 'has_dropdown' => true],
     ];
+    $primaryMenu = collect($primaryMenu)
+        ->reject(fn ($item) => ($item['label'] ?? '') === 'Fiber Tools Kenya')
+        ->push(['label' => 'Fiber Tools Kenya', 'url' => '#fiber-tools-kenya', 'has_dropdown' => false])
+        ->values()
+        ->all();
+    $fiberTools = \App\Http\Controllers\FiberToolController::links();
+    $fiberCableCategoryUrl = url('/category/fiber-optic-cable-prices-in-kenya');
     $fallbackProducts = collect([
         ['name' => 'Mikrotik Intercell 10 B38+B39', 'price' => 85000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092341-vsplsq9n5r.jpg'],
         ['name' => 'Mikrotik mANT LTE 5o with R11e-LTE', 'price' => 25000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092452-wkv4mqomfy.jpg'],
@@ -83,6 +90,16 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 .mk-info-card h2{font-size:18px!important;line-height:1.24;margin:0 0 10px;color:#031532;font-weight:800}
 .mk-info-card p{font-size:15px!important;line-height:1.55;margin:0 0 12px;color:#475467}
 .mk-info-card strong{display:block;color:#0a4588;font-size:17px!important}
+.mk-tools{grid-column:1/-1;margin-top:18px;border:1px solid #dbe5f1;border-radius:16px;background:#fff;padding:26px}
+.mk-tools-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:18px}
+.mk-tools-head h2{margin:0 0 8px;color:#031532;font-size:30px!important;line-height:1.14;font-weight:900}
+.mk-tools-head p{max-width:820px;margin:0;color:#526174;font-size:16px!important;line-height:1.5}
+.mk-tools-category{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border:1px solid #d7dfeb;border-radius:999px;background:#f8fafc;color:#0a4588;text-decoration:none;font-size:14px!important;font-weight:850;white-space:nowrap}
+.mk-tools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.mk-tool-card{display:flex;flex-direction:column;min-height:100%;border:1px solid #e2e8f0;border-radius:12px;background:#f8fbff;padding:18px;text-decoration:none;color:#031532}
+.mk-tool-card h3{margin:0 0 8px;color:#031532;font-size:18px!important;line-height:1.25;font-weight:900}
+.mk-tool-card p{margin:0 0 14px;color:#526174;font-size:14px!important;line-height:1.45}
+.mk-tool-card span{margin-top:auto;color:#0a4588;font-size:14px!important;font-weight:900}
 .mk-long-content{grid-column:1/-1;margin-top:18px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px;color:#1f2937;font-size:18px!important;line-height:1.65}
 .mk-long-content h1,.mk-long-content h2,.mk-long-content h3{color:#031532;font-weight:850;line-height:1.2;margin:0 0 14px}
 .mk-long-content h1{font-size:32px!important}
@@ -99,6 +116,7 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
     .mk-account{justify-content:flex-end}
     .mk-main{grid-template-columns:280px minmax(0,1fr);padding:18px 26px}
     .mk-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .mk-tools-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .mk-info{grid-template-columns:1fr}
 }
 @media(max-width:900px){
@@ -120,12 +138,15 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
     .mk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .mk-section-head{display:block}
     .mk-section-head p{margin-top:8px}
+    .mk-tools-head{display:block}
+    .mk-tools-category{margin-top:14px}
 }
 @media(max-width:560px){
     .mk-logo{width:min(220px,100%);height:68px}
     .mk-logo-img{max-width:min(210px,100%);max-height:62px}
     .mk-search input{height:54px;font-size:16px!important}
     .mk-grid{grid-template-columns:1fr}
+    .mk-tools-grid{grid-template-columns:1fr}
     .mk-card-media{height:180px}
 }
 </style>
@@ -239,6 +260,25 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
                     @endforeach
                 </div>
             @endif
+
+            <section id="fiber-tools-kenya" class="mk-tools" aria-labelledby="fiber-tools-heading">
+                <div class="mk-tools-head">
+                    <div>
+                        <h2 id="fiber-tools-heading">Free Fiber Tools Kenya</h2>
+                        <p>Use free interactive calculators, checkers, and technician request tools for fiber installation planning, loss budgets, coverage checks, bandwidth estimates, colour coding, and troubleshooting in Kenya.</p>
+                    </div>
+                    <a class="mk-tools-category" href="{{ $fiberCableCategoryUrl }}">Fiber Tools Kenya</a>
+                </div>
+                <div class="mk-tools-grid">
+                    @foreach($fiberTools as $tool)
+                        <a class="mk-tool-card" href="{{ url($tool['slug']) }}">
+                            <h3>{{ $tool['title'] }}</h3>
+                            <p>{{ $tool['summary'] }}</p>
+                            <span>Open tool</span>
+                        </a>
+                    @endforeach
+                </div>
+            </section>
 
             <section class="mk-info" aria-label="Homepage highlights">
                 @for($i = 1; $i <= 3; $i++)

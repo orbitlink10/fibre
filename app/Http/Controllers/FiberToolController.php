@@ -34,6 +34,18 @@ class FiberToolController extends Controller
         return array_keys((new self())->tools());
     }
 
+    public static function links(): array
+    {
+        return collect((new self())->tools())
+            ->map(fn ($tool, $slug) => [
+                'slug' => $slug,
+                'title' => $tool['title'],
+                'summary' => $tool['summary'],
+            ])
+            ->values()
+            ->all();
+    }
+
     private function tools(): array
     {
         $sharedCta = [
