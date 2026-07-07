@@ -2,6 +2,43 @@
 
 @section('title', $tool['title'].' | Fiber Optics Kenya')
 @section('meta_description', $tool['meta'])
+@section('canonical', url($slug))
+@php
+    $toolSchema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'WebApplication',
+                'name' => $tool['title'],
+                'description' => $tool['summary'],
+                'url' => url($slug),
+                'applicationCategory' => 'UtilityApplication',
+                'operatingSystem' => 'Web',
+            ],
+            [
+                '@type' => 'FAQPage',
+                'mainEntity' => collect($tool['faqs'])->map(fn ($faq) => [
+                    '@type' => 'Question',
+                    'name' => $faq['q'],
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => $faq['a'],
+                    ],
+                ])->values()->all(),
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => $tool['title'], 'item' => url($slug)],
+                ],
+            ],
+        ],
+    ];
+@endphp
+@section('schema')
+{!! json_encode($toolSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+@endsection
 
 @section('content')
 <style>

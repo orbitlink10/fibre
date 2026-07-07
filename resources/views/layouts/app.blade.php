@@ -3,10 +3,63 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @hasSection('meta_description')
-        <meta name="description" content="@yield('meta_description')">
+    @php
+        $seoTitle = trim($__env->yieldContent('title', 'Fiber Optics Kenya'));
+        $seoDescription = trim($__env->yieldContent('meta_description', 'Fiber optic internet, cable, networking products, installation support, splicing, testing, and connectivity planning in Kenya.'));
+        $seoCanonical = trim($__env->yieldContent('canonical', request()->url()));
+        $seoRobots = trim($__env->yieldContent('robots', ''));
+        $seoImage = trim($__env->yieldContent('seo_image', asset('favicon.ico')));
+
+        if ($seoRobots === '' && request()->query->has('search')) {
+            $seoRobots = 'noindex,follow';
+            $seoCanonical = route('home');
+        }
+
+        if ($seoRobots === '' && request()->routeIs([
+            'login',
+            'register',
+            'password.*',
+            'cart.*',
+            'bookings.*',
+            'dashboard',
+            'profile',
+        ])) {
+            $seoRobots = 'noindex,nofollow';
+        }
+
+        $localBusinessSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'LocalBusiness',
+            'name' => 'Fiber Optics Kenya',
+            'url' => route('home'),
+            'telephone' => '+254704991492',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => 'Nairobi',
+                'addressCountry' => 'KE',
+            ],
+            'areaServed' => 'Kenya',
+        ];
+    @endphp
+    <meta name="description" content="{{ $seoDescription }}">
+    @if($seoRobots !== '')
+        <meta name="robots" content="{{ $seoRobots }}">
     @endif
-    <title>@yield('title', 'Fiber Optics Kenya')</title>
+    <link rel="canonical" href="{{ $seoCanonical }}">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $seoCanonical }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
+    <title>{{ $seoTitle }}</title>
+    <script type="application/ld+json">{!! json_encode($localBusinessSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    @hasSection('schema')
+        <script type="application/ld+json">{!! $__env->yieldContent('schema') !!}</script>
+    @endif
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
@@ -186,13 +239,13 @@
                 <div class="col-lg-5">
                     <h2 class="footer-title text-lg-center">Our Services</h2>
                     <ul class="footer-services">
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('pages.preview', 'amazon-leo-internet-packages-in-kenya') }}">Internet Packages</a></li>
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('pages.preview', 'amazon-leo-internet-prices-kenya') }}">Prices in Kenya</a></li>
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}#kits">Satellite Kits</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('pages.preview', 'fiber-optic-internet-kenya') }}">Fiber Internet Kenya</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('categories.show', 'fiber-optic-cable-prices-in-kenya') }}">Fiber Cable Prices</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('tools.fiber-installation-cost-calculator') }}">Installation Cost Calculator</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('bookings.create') }}">Installation Booking</a></li>
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}#residential">Residential Internet</a></li>
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}#roam">Roam Internet</a></li>
-                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}#installation-support">Connectivity Support</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('pages.preview', 'fiber-to-the-home-kenya') }}">Residential Fiber</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('tools.fiber-troubleshooting-wizard') }}">Troubleshooting</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('tools.free-fiber-technician-request-service') }}">Connectivity Support</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}">Fiber Optics Kenya</a></li>
                     </ul>
                     <h2 class="footer-title mt-4 mb-3">Our Office Address</h2>

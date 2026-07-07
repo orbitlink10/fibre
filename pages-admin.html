@@ -1,0 +1,488 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pages - Fiber Optics Kenya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --dash-bg:#eef3f9;
+            --dash-panel:#f6f9fd;
+            --dash-card:#ffffff;
+            --dash-ink:#28405f;
+            --dash-muted:#8ba0bc;
+            --dash-icon:#dfe7f2;
+            --dash-green:#0f9f6e;
+            --dash-blue:#0b5ed7;
+        }
+        body, button, input, select, textarea { font-family:'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; letter-spacing:normal; }
+        body { margin:0; background:#f4f6fb; color:#212529; font-size:16px; font-weight:400; line-height:24px; overflow-x:hidden; }
+        .dashboard-shell { min-height:100vh; display:grid; grid-template-columns:250px minmax(0,1fr); }
+        .dashboard-sidebar { background:linear-gradient(180deg,#f8fafc 0%,#ffffff 70%); border-right:1px solid #e2e8f0; padding:16px 10px 24px; height:100vh; overflow-y:auto; position:sticky; top:0; box-shadow:8px 0 30px rgba(15,23,42,.08); }
+        .dashboard-brand { display:flex; align-items:center; justify-content:center; gap:8px; background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:12px 14px; min-height:auto; font-size:17px; line-height:22px; font-weight:600; color:#0f172a; text-align:center; text-decoration:none; box-shadow:0 12px 20px rgba(15,23,42,.08); margin:12px 10px 18px; }
+        .dashboard-brand-mark { display:none; }
+        .sidebar-section { margin-top:24px; }
+        .sidebar-heading { color:#94a3b8; font-size:.7rem; font-weight:400; letter-spacing:.18em; text-transform:uppercase; margin:14px 12px 6px; }
+        .sidebar-link { display:grid; grid-template-columns:34px 1fr; align-items:center; gap:10px; min-height:54px; padding:10px 12px; color:#475569; text-decoration:none; font-size:16px; line-height:24px; font-weight:500; border-radius:12px; margin:4px 8px; transition:all .2s ease; }
+        .sidebar-link:hover { background:#f1f5f9; color:#0f172a; box-shadow:none; }
+        .sidebar-link.active { background:#2563eb; color:#fff; box-shadow:0 8px 18px rgba(37,99,235,.35); }
+        .sidebar-icon { width:34px; height:34px; border-radius:10px; background:#e2e8f0; display:grid; place-items:center; color:#64748b; font-size:.95rem; }
+        .sidebar-link:hover .sidebar-icon { background:#dbeafe; color:#2563eb; }
+        .sidebar-link.active .sidebar-icon { background:rgba(255,255,255,.22); color:#fff; }
+        .dashboard-main { min-width:0; padding:0; background:#f4f6fb; overflow-x:hidden; }
+        .dashboard-topbar { display:flex; justify-content:space-between; align-items:center; gap:14px; margin:20px 16px 18px; }
+        .dashboard-title { margin:0 0 4px; font-size:28.8px; line-height:34.56px; font-weight:600; color:#0f172a; }
+        .dashboard-subtitle { color:#6c757d; margin:0; font-size:16px; line-height:24px; }
+        .dashboard-content-card, .card { border:1px solid #e2e8f0; border-radius:18px; box-shadow:0 18px 32px rgba(15,23,42,.08); }
+        .metric { border-left:0; }
+        .metric .card-body { min-height:78px; display:flex; flex-direction:column; justify-content:center; }
+        .card-body, .form-control, .form-select, .btn, .table, .form-label { font-size:16px; }
+        .h4 { font-size:1.25rem; }
+        .h5 { font-size:1.12rem; }
+        .h6 { font-size:1rem; }
+        .btn-brand { background:var(--dash-green); color:#fff; border:0; }
+        .btn-brand:hover { background:#0a8a5f; color:#fff; }
+        .status { text-transform:capitalize; }
+        .adminlte-content-wrapper { background:#f4f6fb; min-height:100vh; padding-bottom:24px; }
+        .adminlte-content-header { padding:20px 16px 0; }
+        .adminlte-content-header h1 { font-size:1.8rem; font-weight:600; color:#0f172a; margin-bottom:.25rem; }
+        .adminlte-content { padding:0 16px 20px; }
+        .adminlte-content .container-fluid { width:100%; padding-right:7.5px; padding-left:7.5px; margin-right:auto; margin-left:auto; }
+        .adminlte-content .card-header { background:transparent; border-bottom:1px solid #e2e8f0; padding:.75rem 1.25rem; }
+        .adminlte-content .card-title { color:#0f172a; font-size:1.1rem; font-weight:600; margin:0; }
+        .adminlte-content .card-body { padding:1.25rem; }
+        .adminlte-content .card-footer { background:transparent; border-top:1px solid rgba(0,0,0,.125); padding:.75rem 1.25rem; }
+        .adminlte-content .card-primary { border-top:3px solid #007bff; }
+        .adminlte-content .form-group { margin-bottom:1rem; }
+        .adminlte-content label { display:inline-block; margin-bottom:.5rem; font-weight:400; }
+        .adminlte-content textarea { border-radius:8px; border:1px solid #ccc; padding:10px; font-size:14px; width:100%; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+        .adminlte-content .form-control { border-radius:12px; border-color:#e2e8f0; font-size:16px; }
+        .adminlte-content .form-control:focus { border-color:#3b82f6; box-shadow:0 0 0 .2rem rgba(59,130,246,.15); }
+        .adminlte-content .btn:not(.btn-link) { border-radius:999px; font-weight:600; }
+        .breadcrumb { background:transparent; padding:0; margin-bottom:0; }
+        @media (max-width: 991.98px) {
+            .dashboard-shell { display:block; }
+            .dashboard-sidebar { position:relative; width:100%; height:auto; max-height:none; }
+            .dashboard-main { padding:16px; }
+            .sidebar-link { min-height:48px; grid-template-columns:38px 1fr; }
+            .sidebar-icon { width:34px; height:34px; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-shell">
+    <aside class="dashboard-sidebar">
+        <a class="dashboard-brand" href="https://fiberopticskenya.co.ke">
+            <span class="dashboard-brand-mark">LA</span>
+            <span>Fiber Optics Kenya</span>
+        </a>
+
+        <div class="sidebar-section">
+            <a class="sidebar-link " href="https://fiberopticskenya.co.ke/dashboard">
+                <span class="sidebar-icon"><i class="bi bi-speedometer2"></i></span>
+                <span>Dashboard</span>
+            </a>
+                            <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/reports">
+                    <span class="sidebar-icon"><i class="bi bi-graph-up"></i></span>
+                    <span>Analytics</span>
+                </a>
+                    </div>
+
+        <div class="sidebar-section">
+            <p class="sidebar-heading">Content Management</p>
+                            <a class="sidebar-link active" href="https://fiberopticskenya.co.ke/pages">
+                    <span class="sidebar-icon"><i class="bi bi-file-earmark-richtext"></i></span>
+                    <span>Pages</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/services">
+                    <span class="sidebar-icon"><i class="bi bi-tools"></i></span>
+                    <span>Services</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/menu">
+                    <span class="sidebar-icon"><i class="bi bi-list"></i></span>
+                    <span>Menu</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/fiber-tools">
+                    <span class="sidebar-icon"><i class="bi bi-diagram-3"></i></span>
+                    <span>Fiber Tools</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/categories">
+                    <span class="sidebar-icon"><i class="bi bi-grid-3x3-gap"></i></span>
+                    <span>Categories</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/products">
+                    <span class="sidebar-icon"><i class="bi bi-box-seam-fill"></i></span>
+                    <span>Products</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/bookings">
+                    <span class="sidebar-icon"><i class="bi bi-cart3"></i></span>
+                    <span>Bookings</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/customers">
+                    <span class="sidebar-icon"><i class="bi bi-person-lines-fill"></i></span>
+                    <span>Customers</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/orders">
+                    <span class="sidebar-icon"><i class="bi bi-bag-check-fill"></i></span>
+                    <span>Orders</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/providers">
+                    <span class="sidebar-icon"><i class="bi bi-people-fill"></i></span>
+                    <span>Providers</span>
+                </a>
+                    </div>
+
+        <div class="sidebar-section">
+            <p class="sidebar-heading">Admin Panel</p>
+                            <a class="sidebar-link" href="https://fiberopticskenya.co.ke/admin/providers">
+                    <span class="sidebar-icon"><i class="bi bi-person-gear"></i></span>
+                    <span>Users</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/homepage-content">
+                    <span class="sidebar-icon"><i class="bi bi-file-earmark-text"></i></span>
+                    <span>Homepage Content</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/testimonials">
+                    <span class="sidebar-icon"><i class="bi bi-chat-square-text-fill"></i></span>
+                    <span>Testimonials</span>
+                </a>
+                        <a class="sidebar-link " href="https://fiberopticskenya.co.ke/profile">
+                <span class="sidebar-icon"><i class="bi bi-person-circle"></i></span>
+                <span>Profile</span>
+            </a>
+            <a class="sidebar-link" href="https://fiberopticskenya.co.ke">
+                <span class="sidebar-icon"><i class="bi bi-house-door"></i></span>
+                <span>Website</span>
+            </a>
+            <form method="post" action="https://fiberopticskenya.co.ke/logout">
+                <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                <button class="sidebar-link w-100 border-0 text-start" type="submit">
+                    <span class="sidebar-icon"><i class="bi bi-box-arrow-right"></i></span>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="dashboard-main">
+                                <style>
+    .pages-screen, .pages-screen button, .pages-screen input, .pages-screen select { font-family:'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; letter-spacing:normal; }
+    .pages-screen { min-height:100vh; padding:36px 24px 57px; background:#f4f6fb; color:#212529; font-size:16px; line-height:24px; font-weight:400; overflow:hidden; }
+    .pages-heading h1 { margin:0 0 4px; font-size:28.8px; line-height:34.56px; font-weight:600; letter-spacing:normal; color:#0f172a; }
+    .pages-heading p { margin:0 0 24px; font-size:16px; line-height:24px; font-weight:400; color:#6c757d; }
+    .pages-card { background:#fff; border-radius:4.8px; overflow:hidden; box-shadow:0 16px 48px rgba(0,0,0,.176); margin-bottom:16px; }
+    .pages-card-head { display:flex; align-items:center; justify-content:space-between; min-height:56px; padding:12px 20px; border-bottom:1px solid rgba(0,0,0,.125); }
+    .pages-card-title { margin:0; font-size:17.6px; line-height:21.12px; font-weight:600; color:#0f172a; }
+    .pages-add-btn { display:inline-flex; align-items:center; gap:6px; border:0; border-radius:999px; padding:4px 12px; color:#007bff; background:#f8f9fa; font-size:14px; line-height:21px; font-weight:700; text-decoration:none; }
+    .pages-toolbar { display:flex; align-items:center; gap:8px; padding:20px 20px 16px; background:#fff; }
+    .pages-select { width:102px; height:31px; border:1px solid #ced4da; border-radius:4px; padding:4px 28px 4px 8px; font-size:12px; line-height:18px; font-weight:400; color:#495057; background:#fff; box-shadow:inset 0 1px 2px rgba(0,0,0,.075); }
+    .pages-apply { height:31px; border:0; border-radius:999px; padding:4px 12px; background:#007bff; color:#fff; font-size:14px; line-height:21px; font-weight:600; }
+    .pages-table-wrap { padding:0 20px 20px; background:#fff; overflow-x:auto; }
+    .pages-table { width:100%; border-collapse:collapse; table-layout:fixed; color:#001438; }
+    .pages-table thead tr { background:#f8fafc; border:0; }
+    .pages-table th { padding:12px; color:#64748b; font-size:11.52px; line-height:17.28px; letter-spacing:1.3824px; text-transform:uppercase; font-weight:700; background:#f8fafc; }
+    .pages-table td { padding:12px; font-size:16px; line-height:24px; font-weight:400; color:#1f2937; vertical-align:middle; border-bottom:1px solid #dee2e6; background:transparent; overflow-wrap:anywhere; }
+    .pages-table tbody tr:nth-child(odd) { background:rgba(0,0,0,.05); }
+    .pages-table tbody tr:nth-child(even) { background:#fff; }
+    .pages-check { width:18px; height:18px; border:1px solid #7b8794; border-radius:4px; }
+    .pages-no { width:88px; color:#002d68; }
+    .pages-image { width:150px; max-width:100%; height:auto; max-height:100px; object-fit:cover; display:block; }
+    .pages-action { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
+    .pages-pill { width:134px; min-width:134px; height:31px; display:inline-flex; align-items:center; justify-content:center; gap:6px; border-radius:999px; background:transparent; font-size:14px; line-height:21px; font-weight:600; padding:4px 12px; text-decoration:none; white-space:nowrap; overflow:hidden; }
+    .pages-pill.preview { color:#0798bd; border:1px solid #08a7ce; }
+    .pages-pill.update { color:#ffb000; border:1px solid #ffbf19; }
+    .pages-pill.delete { color:#ff2434; border:1px solid #ff2434; }
+    .pages-delete-form { margin:0; }
+    @media (max-width: 991.98px) {
+        .pages-screen { padding:20px 16px; }
+        .pages-card-head, .pages-toolbar, .pages-table-wrap { padding-left:16px; padding-right:16px; }
+    }
+</style>
+<div class="pages-screen">
+    <div class="pages-heading">
+        <h1>Pages</h1>
+        <p>Manage site pages and published content.</p>
+    </div>
+
+    <section class="pages-card">
+        <div class="pages-card-head">
+            <h2 class="pages-card-title">Post List</h2>
+            <a class="pages-add-btn" href="https://fiberopticskenya.co.ke/new-post"><i class="bi bi-plus-lg"></i> Add Page</a>
+        </div>
+
+        <div class="pages-toolbar">
+            <select class="pages-select" aria-label="Bulk actions">
+                <option>Bulk actions</option>
+                <option>Delete</option>
+                <option>Publish</option>
+            </select>
+            <button class="pages-apply" type="button">Apply</button>
+        </div>
+
+        <div class="pages-table-wrap">
+            <table class="pages-table">
+                <thead>
+                    <tr>
+                        <th style="width:5%;"><input class="pages-check" type="checkbox"></th>
+                        <th style="width:7%;">No.</th>
+                        <th style="width:19%;">Image</th>
+                        <th style="width:24%;">Title</th>
+                        <th style="width:24%;">Alt Text</th>
+                        <th style="width:9%;">Type</th>
+                        <th style="width:13%;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="14"></td>
+                            <td class="pages-no">14</td>
+                            <td><img class="pages-image" src="https://via.placeholder.com/260x150?text=No+Image" alt="Fiber optic service providers Kenya network rack"></td>
+                            <td>Fiber Optic Service Providers Kenya.</td>
+                            <td>Fiber optic service providers Kenya network rack</td>
+                            <td>Page</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/fiber-optic-service-providers-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/14/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/14">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="13"></td>
+                            <td class="pages-no">13</td>
+                            <td><img class="pages-image" src="https://fiberopticskenya.co.ke/page-images/pages/Dn1CWwTLE442QqB78NsfLzS3KVfAcHICHQAZX0pY.jpg" alt="Fiber optic network installation Kenya patch panel"></td>
+                            <td>Fiber Optic Network Installation Kenya</td>
+                            <td>Fiber optic network installation Kenya patch panel</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/fiber-optic-network-installation-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/13/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/13">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="12"></td>
+                            <td class="pages-no">12</td>
+                            <td><img class="pages-image" src="https://fiberopticskenya.co.ke/page-images/pages/uxoVaIX10N70cco6W63ErqnkXwG9bCTxIWaSW47b.jpg" alt="Fiber optic solutions Kenya network rack and patch panel"></td>
+                            <td>Fiber Optic Solutions Kenya</td>
+                            <td>Fiber optic solutions Kenya network rack and patch panel</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/fiber-optic-solutions-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/12/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/12">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="11"></td>
+                            <td class="pages-no">11</td>
+                            <td><img class="pages-image" src="https://fiberopticskenya.co.ke/page-images/pages/mXV3l5p7eudgsmpGE7NDNt4KADa5fgzXIL6VVVn2.jpg" alt="Fiber optic technicians in Kenya working on patch panels"></td>
+                            <td>Fiber Optic Technicians Kenya</td>
+                            <td>Fiber optic technicians in Kenya working on patch panels</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/fiber-optic-technicians-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/11/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/11">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="10"></td>
+                            <td class="pages-no">10</td>
+                            <td><img class="pages-image" src="https://fiberopticskenya.co.ke/page-images/pages/PpGtGm0X6iExU6I5cq7LjKCqace9iwrmuMgo2fVV.jpg" alt="Fiber optic internet cable in Kenya"></td>
+                            <td>Fiber Optic Internet Kenya</td>
+                            <td>Fiber optic internet cable in Kenya</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/fiber-optic-internet-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/10/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/10">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="9"></td>
+                            <td class="pages-no">9</td>
+                            <td><img class="pages-image" src="https://fiberopticskenya.co.ke/page-images/pages/mMOg2idFlbmM4RSNirHPGCZ6NTPPFTVERUCMo9MO.jpg" alt="Fiber optic cable installation in Kenya"></td>
+                            <td>Fiber Optic Cable Kenya</td>
+                            <td>Fiber optic cable installation in Kenya</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/fiber-optic-cable-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/9/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/9">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="8"></td>
+                            <td class="pages-no">8</td>
+                            <td><img class="pages-image" src="https://via.placeholder.com/260x150?text=No+Image" alt="Professional fiber optic contractors installing fiber cables and networking products in Kenya"></td>
+                            <td>Professional Fiber Optic Contractors in Kenya</td>
+                            <td>Professional fiber optic contractors installing fiber cables and networking products in Kenya</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/professional-fiber-optic-contractors-in-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/8/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/8">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="7"></td>
+                            <td class="pages-no">7</td>
+                            <td><img class="pages-image" src="https://fiberopticskenya.co.ke/page-images/pages/9QQYp5gi3ukz8dtav5envtoqPkEQTuVasH0rnfaA.png" alt="How to Choose the Best Fiber Optic Installation Company in Kenya"></td>
+                            <td>How to Choose the Best Fiber Optic Installation Company in Kenya: A Buyer&#039;s Guide</td>
+                            <td>How to Choose the Best Fiber Optic Installation Company in Kenya</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/how-to-choose-the-best-fiber-optic-installation-company-in-kenya-a-buyers-guide" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/7/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/7">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="6"></td>
+                            <td class="pages-no">6</td>
+                            <td><img class="pages-image" src="https://via.placeholder.com/260x150?text=No+Image" alt="How Fiber Optics Kenya installation and support works"></td>
+                            <td>How It Works</td>
+                            <td>How Fiber Optics Kenya installation and support works</td>
+                            <td>Page</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/how-it-works" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/6/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/6">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="5"></td>
+                            <td class="pages-no">5</td>
+                            <td><img class="pages-image" src="https://via.placeholder.com/260x150?text=No+Image" alt="Fiber Optics Kenya services for cabling networking and installation"></td>
+                            <td>Services</td>
+                            <td>Fiber Optics Kenya services for cabling networking and installation</td>
+                            <td>Page</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/services" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/5/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/5">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="4"></td>
+                            <td class="pages-no">4</td>
+                            <td><img class="pages-image" src="https://via.placeholder.com/260x150?text=No+Image" alt="Fiber Optics Kenya frequently asked questions"></td>
+                            <td>FAQ</td>
+                            <td>Fiber Optics Kenya frequently asked questions</td>
+                            <td>Page</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/faq" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/4/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/4">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="3"></td>
+                            <td class="pages-no">3</td>
+                            <td><img class="pages-image" src="https://via.placeholder.com/260x150?text=No+Image" alt="About Fiber Optics Kenya networking and installation support"></td>
+                            <td>About Us</td>
+                            <td>About Fiber Optics Kenya networking and installation support</td>
+                            <td>Page</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/about-us" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/3/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/3">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="2"></td>
+                            <td class="pages-no">2</td>
+                            <td><img class="pages-image" src="https://fiberopticskenya.co.ke/page-images/pages/FcCVV5nom9utaxF6XrxrTTNzRISWbspFQhjRntKq.png" alt="Fiber Optic Installation Company in Kenya"></td>
+                            <td>Fiber Optic Installation Company in Kenya</td>
+                            <td>Fiber Optic Installation Company in Kenya</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/fiber-optic-installation-company-in-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/2/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/2">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                            <tr>
+                            <td><input class="pages-check" type="checkbox" name="selected[]" value="1"></td>
+                            <td class="pages-no">1</td>
+                            <td><img class="pages-image" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Lasafi Cleaning Services in Kenya"></td>
+                            <td>Lasafi Cleaning Services in Kenya</td>
+                            <td>Lasafi Cleaning Services in Kenya</td>
+                            <td>Post</td>
+                            <td>
+                                <div class="pages-action">
+                                    <a class="pages-pill preview" href="https://fiberopticskenya.co.ke/lasafi-cleaning-services-in-kenya" target="_blank"><i class="bi bi-eye-fill"></i> Preview</a>
+                                    <a class="pages-pill update" href="https://fiberopticskenya.co.ke/pages/1/edit"><i class="bi bi-pencil-square"></i> Update</a>
+                                    <form class="pages-delete-form" method="post" action="https://fiberopticskenya.co.ke/pages/1">
+                                        <input type="hidden" name="_token" value="lgpCSKDrK9Cymmhs6Ca5qPOP6iWJ9bfCRZIt0sBR" autocomplete="off">                                        <input type="hidden" name="_method" value="delete">                                        <button class="pages-pill delete" type="submit" onclick="return confirm('Delete this page?')"><i class="bi bi-trash3-fill"></i> Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                                    </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+    </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

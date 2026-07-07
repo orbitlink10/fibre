@@ -2,6 +2,35 @@
 
 @section('title', $page['meta_title'] ?? $page['title'])
 @section('meta_description', $page['meta_description'] ?? '')
+@section('canonical', route('pages.preview', $page['slug']))
+@section('og_type', 'article')
+@section('seo_image', $image)
+@php
+    $pageSchema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => ($page['type'] ?? 'Post') === 'Page' ? 'WebPage' : 'Article',
+                'headline' => $page['title'],
+                'description' => $page['meta_description'] ?? '',
+                'image' => $image,
+                'url' => route('pages.preview', $page['slug']),
+                'author' => ['@type' => 'Organization', 'name' => 'Fiber Optics Kenya'],
+                'publisher' => ['@type' => 'Organization', 'name' => 'Fiber Optics Kenya'],
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => $page['title'], 'item' => route('pages.preview', $page['slug'])],
+                ],
+            ],
+        ],
+    ];
+@endphp
+@section('schema')
+{!! json_encode($pageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+@endsection
 
 @section('content')
 @php

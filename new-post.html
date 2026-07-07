@@ -1,0 +1,290 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Page - Fiber Optics Kenya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --dash-bg:#eef3f9;
+            --dash-panel:#f6f9fd;
+            --dash-card:#ffffff;
+            --dash-ink:#28405f;
+            --dash-muted:#8ba0bc;
+            --dash-icon:#dfe7f2;
+            --dash-green:#0f9f6e;
+            --dash-blue:#0b5ed7;
+        }
+        body, button, input, select, textarea { font-family:'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; letter-spacing:normal; }
+        body { margin:0; background:#f4f6fb; color:#212529; font-size:16px; font-weight:400; line-height:24px; overflow-x:hidden; }
+        .dashboard-shell { min-height:100vh; display:grid; grid-template-columns:250px minmax(0,1fr); }
+        .dashboard-sidebar { background:linear-gradient(180deg,#f8fafc 0%,#ffffff 70%); border-right:1px solid #e2e8f0; padding:16px 10px 24px; height:100vh; overflow-y:auto; position:sticky; top:0; box-shadow:8px 0 30px rgba(15,23,42,.08); }
+        .dashboard-brand { display:flex; align-items:center; justify-content:center; gap:8px; background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:12px 14px; min-height:auto; font-size:17px; line-height:22px; font-weight:600; color:#0f172a; text-align:center; text-decoration:none; box-shadow:0 12px 20px rgba(15,23,42,.08); margin:12px 10px 18px; }
+        .dashboard-brand-mark { display:none; }
+        .sidebar-section { margin-top:24px; }
+        .sidebar-heading { color:#94a3b8; font-size:.7rem; font-weight:400; letter-spacing:.18em; text-transform:uppercase; margin:14px 12px 6px; }
+        .sidebar-link { display:grid; grid-template-columns:34px 1fr; align-items:center; gap:10px; min-height:54px; padding:10px 12px; color:#475569; text-decoration:none; font-size:16px; line-height:24px; font-weight:500; border-radius:12px; margin:4px 8px; transition:all .2s ease; }
+        .sidebar-link:hover { background:#f1f5f9; color:#0f172a; box-shadow:none; }
+        .sidebar-link.active { background:#2563eb; color:#fff; box-shadow:0 8px 18px rgba(37,99,235,.35); }
+        .sidebar-icon { width:34px; height:34px; border-radius:10px; background:#e2e8f0; display:grid; place-items:center; color:#64748b; font-size:.95rem; }
+        .sidebar-link:hover .sidebar-icon { background:#dbeafe; color:#2563eb; }
+        .sidebar-link.active .sidebar-icon { background:rgba(255,255,255,.22); color:#fff; }
+        .dashboard-main { min-width:0; padding:0; background:#f4f6fb; overflow-x:hidden; }
+        .dashboard-topbar { display:flex; justify-content:space-between; align-items:center; gap:14px; margin:20px 16px 18px; }
+        .dashboard-title { margin:0 0 4px; font-size:28.8px; line-height:34.56px; font-weight:600; color:#0f172a; }
+        .dashboard-subtitle { color:#6c757d; margin:0; font-size:16px; line-height:24px; }
+        .dashboard-content-card, .card { border:1px solid #e2e8f0; border-radius:18px; box-shadow:0 18px 32px rgba(15,23,42,.08); }
+        .metric { border-left:0; }
+        .metric .card-body { min-height:78px; display:flex; flex-direction:column; justify-content:center; }
+        .card-body, .form-control, .form-select, .btn, .table, .form-label { font-size:16px; }
+        .h4 { font-size:1.25rem; }
+        .h5 { font-size:1.12rem; }
+        .h6 { font-size:1rem; }
+        .btn-brand { background:var(--dash-green); color:#fff; border:0; }
+        .btn-brand:hover { background:#0a8a5f; color:#fff; }
+        .status { text-transform:capitalize; }
+        .adminlte-content-wrapper { background:#f4f6fb; min-height:100vh; padding-bottom:24px; }
+        .adminlte-content-header { padding:20px 16px 0; }
+        .adminlte-content-header h1 { font-size:1.8rem; font-weight:600; color:#0f172a; margin-bottom:.25rem; }
+        .adminlte-content { padding:0 16px 20px; }
+        .adminlte-content .container-fluid { width:100%; padding-right:7.5px; padding-left:7.5px; margin-right:auto; margin-left:auto; }
+        .adminlte-content .card-header { background:transparent; border-bottom:1px solid #e2e8f0; padding:.75rem 1.25rem; }
+        .adminlte-content .card-title { color:#0f172a; font-size:1.1rem; font-weight:600; margin:0; }
+        .adminlte-content .card-body { padding:1.25rem; }
+        .adminlte-content .card-footer { background:transparent; border-top:1px solid rgba(0,0,0,.125); padding:.75rem 1.25rem; }
+        .adminlte-content .card-primary { border-top:3px solid #007bff; }
+        .adminlte-content .form-group { margin-bottom:1rem; }
+        .adminlte-content label { display:inline-block; margin-bottom:.5rem; font-weight:400; }
+        .adminlte-content textarea { border-radius:8px; border:1px solid #ccc; padding:10px; font-size:14px; width:100%; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+        .adminlte-content .form-control { border-radius:12px; border-color:#e2e8f0; font-size:16px; }
+        .adminlte-content .form-control:focus { border-color:#3b82f6; box-shadow:0 0 0 .2rem rgba(59,130,246,.15); }
+        .adminlte-content .btn:not(.btn-link) { border-radius:999px; font-weight:600; }
+        .breadcrumb { background:transparent; padding:0; margin-bottom:0; }
+        @media (max-width: 991.98px) {
+            .dashboard-shell { display:block; }
+            .dashboard-sidebar { position:relative; width:100%; height:auto; max-height:none; }
+            .dashboard-main { padding:16px; }
+            .sidebar-link { min-height:48px; grid-template-columns:38px 1fr; }
+            .sidebar-icon { width:34px; height:34px; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard-shell">
+    <aside class="dashboard-sidebar">
+        <a class="dashboard-brand" href="https://fiberopticskenya.co.ke">
+            <span class="dashboard-brand-mark">LA</span>
+            <span>Fiber Optics Kenya</span>
+        </a>
+
+        <div class="sidebar-section">
+            <a class="sidebar-link " href="https://fiberopticskenya.co.ke/dashboard">
+                <span class="sidebar-icon"><i class="bi bi-speedometer2"></i></span>
+                <span>Dashboard</span>
+            </a>
+                            <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/reports">
+                    <span class="sidebar-icon"><i class="bi bi-graph-up"></i></span>
+                    <span>Analytics</span>
+                </a>
+                    </div>
+
+        <div class="sidebar-section">
+            <p class="sidebar-heading">Content Management</p>
+                            <a class="sidebar-link active" href="https://fiberopticskenya.co.ke/pages">
+                    <span class="sidebar-icon"><i class="bi bi-file-earmark-richtext"></i></span>
+                    <span>Pages</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/services">
+                    <span class="sidebar-icon"><i class="bi bi-tools"></i></span>
+                    <span>Services</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/menu">
+                    <span class="sidebar-icon"><i class="bi bi-list"></i></span>
+                    <span>Menu</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/fiber-tools">
+                    <span class="sidebar-icon"><i class="bi bi-diagram-3"></i></span>
+                    <span>Fiber Tools</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/categories">
+                    <span class="sidebar-icon"><i class="bi bi-grid-3x3-gap"></i></span>
+                    <span>Categories</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/products">
+                    <span class="sidebar-icon"><i class="bi bi-box-seam-fill"></i></span>
+                    <span>Products</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/bookings">
+                    <span class="sidebar-icon"><i class="bi bi-cart3"></i></span>
+                    <span>Bookings</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/customers">
+                    <span class="sidebar-icon"><i class="bi bi-person-lines-fill"></i></span>
+                    <span>Customers</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/orders">
+                    <span class="sidebar-icon"><i class="bi bi-bag-check-fill"></i></span>
+                    <span>Orders</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/providers">
+                    <span class="sidebar-icon"><i class="bi bi-people-fill"></i></span>
+                    <span>Providers</span>
+                </a>
+                    </div>
+
+        <div class="sidebar-section">
+            <p class="sidebar-heading">Admin Panel</p>
+                            <a class="sidebar-link" href="https://fiberopticskenya.co.ke/admin/providers">
+                    <span class="sidebar-icon"><i class="bi bi-person-gear"></i></span>
+                    <span>Users</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/admin/homepage-content">
+                    <span class="sidebar-icon"><i class="bi bi-file-earmark-text"></i></span>
+                    <span>Homepage Content</span>
+                </a>
+                <a class="sidebar-link " href="https://fiberopticskenya.co.ke/testimonials">
+                    <span class="sidebar-icon"><i class="bi bi-chat-square-text-fill"></i></span>
+                    <span>Testimonials</span>
+                </a>
+                        <a class="sidebar-link " href="https://fiberopticskenya.co.ke/profile">
+                <span class="sidebar-icon"><i class="bi bi-person-circle"></i></span>
+                <span>Profile</span>
+            </a>
+            <a class="sidebar-link" href="https://fiberopticskenya.co.ke">
+                <span class="sidebar-icon"><i class="bi bi-house-door"></i></span>
+                <span>Website</span>
+            </a>
+            <form method="post" action="https://fiberopticskenya.co.ke/logout">
+                <input type="hidden" name="_token" value="NUxIeiQ99fhWMeR43SwbqDsX41Csy3ff4gyabMEU" autocomplete="off">                <button class="sidebar-link w-100 border-0 text-start" type="submit">
+                    <span class="sidebar-icon"><i class="bi bi-box-arrow-right"></i></span>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="dashboard-main">
+                                <style>
+    .page-form-screen, .page-form-screen button, .page-form-screen input, .page-form-screen select, .page-form-screen textarea { font-family:'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; letter-spacing:normal; }
+    .page-form-screen { min-height:100vh; padding:36px 24px 57px; background:#f4f6fb; color:#212529; font-size:16px; line-height:24px; font-weight:400; overflow:hidden; }
+    .page-form-wrap { width:100%; max-width:none; }
+    .page-form-title { margin:0 0 24px; font-size:28.8px; line-height:34.56px; font-weight:600; color:#0f172a; }
+    .page-form-card { background:#fff; border-radius:4.8px; box-shadow:0 16px 48px rgba(0,0,0,.176); overflow:hidden; margin-bottom:16px; }
+    .page-form-card-head { background:#fff; min-height:56px; display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-bottom:1px solid rgba(0,0,0,.125); }
+    .page-form-card-head h2 { margin:0; font-size:17.6px; line-height:21.12px; font-weight:600; color:#0f172a; }
+    .page-form-back { color:#007bff; text-decoration:none; font-size:14px; line-height:21px; font-weight:700; }
+    .page-form-body { padding:20px; }
+    .page-field { margin-bottom:16px; }
+    .page-label { display:block; margin-bottom:8px; font-size:16px; line-height:24px; font-weight:600; color:#212529; }
+    .page-input, .page-select, .page-textarea { width:100%; border:1px solid #ced4da; border-radius:4px; color:#495057; background:#fff; font-size:16px; line-height:24px; font-weight:400; outline:none; box-shadow:inset 0 1px 2px rgba(0,0,0,.075); }
+    .page-input, .page-select { height:38px; padding:6px 12px; }
+    .page-select { appearance:auto; }
+    .page-textarea { min-height:360px; padding:12px; }
+    .page-input::placeholder, .page-textarea::placeholder { color:#8794a3; font-weight:400; }
+    .page-input:focus, .page-select:focus, .page-textarea:focus { border-color:#9bc9fb; box-shadow:0 0 0 3px rgba(13,128,247,.12); }
+    .page-actions { display:flex; gap:12px; align-items:center; margin-top:26px; }
+    .page-save { border:0; border-radius:999px; padding:6px 12px; background:#007bff; color:#fff; font-size:14px; line-height:21px; font-weight:600; }
+    .page-cancel { border:1px solid #6c757d; border-radius:999px; padding:5px 12px; background:#fff; color:#6c757d; font-size:14px; line-height:21px; font-weight:600; text-decoration:none; }
+    .tox.tox-tinymce { border-radius:4px; border-color:#ced4da; min-height:430px; font-family:'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .tox .tox-menubar, .tox .tox-toolbar, .tox .tox-toolbar__primary, .tox .tox-tbtn, .tox .tox-mbtn, .tox .tox-statusbar { font-family:'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    .invalid-feedback { display:block; font-size:1rem; }
+    @media (max-width: 991.98px) {
+        .page-form-screen { padding:20px 16px; }
+        .page-form-title { font-size:28.8px; }
+        .page-form-body, .page-form-card-head { padding-left:20px; padding-right:20px; }
+    }
+</style>
+<div class="page-form-screen">
+    <div class="page-form-wrap">
+        <h1 class="page-form-title">Manage Pages</h1>
+
+        <form class="page-form-card" action="https://fiberopticskenya.co.ke/pages" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="NUxIeiQ99fhWMeR43SwbqDsX41Csy3ff4gyabMEU" autocomplete="off">            
+            <div class="page-form-card-head">
+                <h2>Add New Post</h2>
+                <a class="page-form-back" href="https://fiberopticskenya.co.ke/pages">Back</a>
+            </div>
+
+            <div class="page-form-body">
+                <div class="page-field">
+                    <label class="page-label" for="meta_title">Meta Title</label>
+                    <input class="page-input" id="meta_title" name="meta_title" value="" placeholder="Enter Meta Title" maxlength="160" required>
+                                    </div>
+
+                <div class="page-field">
+                    <label class="page-label" for="meta_description">Meta Description</label>
+                    <input class="page-input" id="meta_description" name="meta_description" value="" placeholder="Enter Meta Description" maxlength="255">
+                                    </div>
+
+                <div class="page-field">
+                    <label class="page-label" for="title">Page Title</label>
+                    <input class="page-input" id="title" name="title" value="" placeholder="Enter Keyword Title" maxlength="180" required>
+                                    </div>
+
+                <div class="page-field">
+                    <label class="page-label" for="alt">Image Alt Text</label>
+                    <input class="page-input" id="alt" name="alt" value="" placeholder="Enter Image Alt Text" maxlength="160">
+                                    </div>
+
+                <div class="page-field">
+                    <label class="page-label" for="heading_2">Heading 2</label>
+                    <input class="page-input" id="heading_2" name="heading_2" value="" placeholder="Enter Heading 2" maxlength="180">
+                                    </div>
+
+                <div class="page-field">
+                    <label class="page-label" for="type">Type</label>
+                    <select class="page-select" id="type" name="type" required>
+                                                    <option value="Post" selected>Post</option>
+                                                    <option value="Page" >Page</option>
+                                            </select>
+                                    </div>
+
+                <div class="page-field">
+                    <label class="page-label" for="image">Image</label>
+                    <input class="page-input" id="image" name="image" type="file" accept="image/*">
+                                    </div>
+
+                <div class="page-field">
+                    <label class="page-label" for="description">Page Description:</label>
+                    <textarea class="page-textarea" id="description" name="description"></textarea>
+                                    </div>
+
+                <div class="page-actions">
+                    <button class="page-save" type="submit">Save</button>
+                    <a class="page-cancel" href="https://fiberopticskenya.co.ke/pages">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+    </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!window.tinymce) {
+            return;
+        }
+
+        tinymce.init({
+            selector: '#description',
+            menubar: 'file edit view insert format tools table',
+            plugins: 'link image media table code fullscreen lists advlist autolink',
+            toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code fullscreen',
+            block_formats: 'Paragraph=p; Heading 1=h1; Heading 2=h2; Heading 3=h3; Heading 4=h4',
+            height: 430,
+            branding: false,
+            promotion: false,
+            content_style: "body { font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 400; color: #495057; }"
+        });
+    });
+</script>
+</body>
+</html>
+

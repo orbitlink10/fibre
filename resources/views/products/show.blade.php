@@ -1,7 +1,45 @@
 @extends('layouts.app')
 
 @section('title', $product->name.' | Fiber Optics Kenya')
-@section('meta_description', $product->meta_description ?: $product->name.' available from Fiber Optics Kenya.')
+@section('meta_description', $product->meta_description ?: $product->name.' price, availability, installation support, and delivery options from Fiber Optics Kenya.')
+@section('canonical', route('products.show', ['product' => $product->slug]))
+@section('og_type', 'product')
+@section('seo_image', $product->public_image_url)
+@php
+    $productSchema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'Product',
+                'name' => $product->name,
+                'image' => [$product->public_image_url],
+                'description' => $product->meta_description ?: strip_tags((string) $product->description) ?: $product->name.' from Fiber Optics Kenya.',
+                'sku' => (string) $product->id,
+                'brand' => ['@type' => 'Brand', 'name' => 'Fiber Optics Kenya'],
+                'category' => $product->category?->name,
+                'offers' => [
+                    '@type' => 'Offer',
+                    'url' => route('products.show', ['product' => $product->slug]),
+                    'priceCurrency' => 'KES',
+                    'price' => (float) $product->price,
+                    'availability' => $product->quantity > 0 ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+                    'itemCondition' => 'https://schema.org/NewCondition',
+                ],
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => $product->category?->name ?? 'Shop', 'item' => $product->category ? route('categories.show', ['category' => $product->category->slug]) : route('home')],
+                    ['@type' => 'ListItem', 'position' => 3, 'name' => $product->name, 'item' => route('products.show', ['product' => $product->slug])],
+                ],
+            ],
+        ],
+    ];
+@endphp
+@section('schema')
+{!! json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+@endsection
 
 @section('content')
 <style>
@@ -51,6 +89,15 @@
         @if(trim((string) $product->description) !== '')
             <section class="product-description">
                 {!! $product->description !!}
+            </section>
+        @else
+            <section class="product-description">
+                <h2>{{ $product->name }} in Kenya</h2>
+                <p>{{ $product->name }} is listed by Fiber Optics Kenya for customers comparing reliable networking, fiber optic, and connectivity equipment in Kenya. Use this page to confirm the current price, request availability, and plan whether the item fits your home, office, ISP, CCTV, or business network setup.</p>
+                <h2>Buying and Installation Support</h2>
+                <p>Before ordering, confirm the required cable type, connector type, router or switch compatibility, installation distance, power requirements, mounting position, and whether a technician should handle setup. Fiber Optics Kenya can help with product selection, clean installation planning, network testing, and troubleshooting where needed.</p>
+                <h2>Delivery, Warranty, and Availability</h2>
+                <p>Stock can change, especially for high-demand networking products and Starlink accessories. Contact the team to confirm availability, delivery options in Kenya, warranty terms, and any accessories required for a complete installation.</p>
             </section>
         @endif
     </div>

@@ -83,8 +83,33 @@ class HomeController extends Controller
         $content['home_mobile_menu_url'] = Setting::valueFor('home_mobile_menu_url', '#installation-support') ?: '#installation-support';
 
         $search = trim((string) $request->query('search', ''));
+        $relevantCategoryTerms = [
+            'fiber',
+            'fibre',
+            'optic',
+            'cable',
+            'starlink',
+            'network',
+            'wi-fi',
+            'wifi',
+            'router',
+            'switch',
+            'cctv',
+            'security',
+            'isp',
+            'billing',
+            'accessories',
+            'internet',
+            'satellite',
+        ];
         $categories = Category::query()
             ->where('is_active', true)
+            ->where(function ($query) use ($relevantCategoryTerms) {
+                foreach ($relevantCategoryTerms as $term) {
+                    $query->orWhere('name', 'like', '%'.$term.'%')
+                        ->orWhere('slug', 'like', '%'.$term.'%');
+                }
+            })
             ->withCount('products')
             ->orderBy('name')
             ->get();

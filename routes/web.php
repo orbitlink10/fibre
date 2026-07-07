@@ -27,6 +27,81 @@ use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/sitemap.xml', function () {
+    $relevantCategoryTerms = [
+        'fiber',
+        'fibre',
+        'optic',
+        'cable',
+        'starlink',
+        'network',
+        'wi-fi',
+        'wifi',
+        'router',
+        'switch',
+        'cctv',
+        'security',
+        'isp',
+        'billing',
+        'accessories',
+        'internet',
+        'satellite',
+    ];
+    $urls = collect([
+        [
+            'loc' => route('home'),
+            'priority' => '1.0',
+            'changefreq' => 'daily',
+        ],
+    ]);
+
+    $urls = $urls
+        ->merge(\App\Models\Category::query()
+            ->where('is_active', true)
+            ->where(function ($query) use ($relevantCategoryTerms) {
+                foreach ($relevantCategoryTerms as $term) {
+                    $query->orWhere('name', 'like', '%'.$term.'%')
+                        ->orWhere('slug', 'like', '%'.$term.'%');
+                }
+            })
+            ->get()
+            ->map(fn ($category) => [
+                'loc' => route('categories.show', ['category' => $category->slug]),
+                'priority' => '0.8',
+                'changefreq' => 'weekly',
+            ]))
+        ->merge(\App\Models\Product::query()
+            ->latest('updated_at')
+            ->get()
+            ->map(fn ($product) => [
+                'loc' => route('products.show', ['product' => $product->slug]),
+                'priority' => '0.7',
+                'changefreq' => 'weekly',
+            ]))
+        ->merge(collect(FiberToolController::slugs())
+            ->map(fn ($slug) => [
+                'loc' => url($slug),
+                'priority' => '0.7',
+                'changefreq' => 'monthly',
+            ]));
+
+    if (Storage::disk('local')->exists('pages.json')) {
+        $urls = $urls->merge(collect(json_decode(Storage::disk('local')->get('pages.json'), true) ?: [])
+            ->filter(fn ($page) => ! empty($page['slug']))
+            ->map(fn ($page) => [
+                'loc' => route('pages.preview', $page['slug']),
+                'priority' => ($page['type'] ?? 'Post') === 'Page' ? '0.8' : '0.6',
+                'changefreq' => 'monthly',
+            ]));
+    }
+
+    $xml = view('sitemap', [
+        'urls' => $urls->unique('loc')->values(),
+    ])->render();
+
+    return response($xml, 200)->header('Content-Type', 'application/xml');
+})->name('sitemap');
+
 Route::get('/', HomeController::class)->name('home');
 Route::get('/shop/{product:slug}', [PublicProductController::class, 'show'])->name('products.show');
 Route::get('/category/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');
@@ -109,6 +184,13 @@ Route::get('/uploaded-images/{path}', function (string $path) {
         ->header('Content-Type', Storage::disk('public')->mimeType($path) ?: 'application/octet-stream')
         ->header('Cache-Control', 'public, max-age=604800');
 })->where('path', '.*')->name('media.image');
+
+Route::redirect('/satellite-internet-providers-in-kenya', '/fiber-optic-internet-kenya', 301);
+Route::redirect('/amazon-leo-internet-latency-in-kenya', '/fiber-troubleshooting-wizard', 301);
+Route::redirect('/amazon-leo-internet-packages-in-kenya', '/fiber-optic-internet-kenya', 301);
+Route::redirect('/amazon-leo-internet-prices-kenya', '/category/fiber-optic-cable-prices-in-kenya', 301);
+Route::redirect('/amazon-leo-internet-speeds-in-kenya', '/fiber-bandwidth-calculator', 301);
+
 Route::get('/{slug}', [PageController::class, 'preview'])
     ->where('slug', '^(?!admin|bookings|category|categories|customers|dashboard|forgot-password|login|logout|new-post|orders|page|pages|password|products|profile|register|storage|testimonials).+')
     ->name('pages.preview');

@@ -1,6 +1,38 @@
 @extends('layouts.app')
-@section('title', 'Fiber Optics Kenya')
-@section('meta_description', 'Shop fiber optic networking products, installation accessories, routers, switches, and connectivity equipment in Kenya.')
+@section('title', 'Fiber Optic Internet, Cable and Installation Services in Kenya')
+@section('meta_description', 'Shop fiber optic cables, networking products, installation accessories, routers, switches, splicing support, and connectivity equipment in Kenya.')
+@section('canonical', route('home'))
+@php
+    $homeSchema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'WebSite',
+                'name' => 'Fiber Optics Kenya',
+                'url' => route('home'),
+                'potentialAction' => [
+                    '@type' => 'SearchAction',
+                    'target' => route('home').'?search={search_term_string}',
+                    'query-input' => 'required name=search_term_string',
+                ],
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 1,
+                        'name' => 'Home',
+                        'item' => route('home'),
+                    ],
+                ],
+            ],
+        ],
+    ];
+@endphp
+@section('schema')
+{!! json_encode($homeSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+@endsection
 @section('full_bleed', true)
 @section('content')
 @php
@@ -26,6 +58,7 @@
         ->all();
     $fiberTools = \App\Http\Controllers\FiberToolController::links();
     $fiberCableCategoryUrl = url('/category/fiber-optic-cable-prices-in-kenya');
+    $longHomepageContent = preg_replace('/<h1(\s[^>]*)?>(.*?)<\/h1>/is', '<h2$1>$2</h2>', (string) ($content['home_empty_testimonials'] ?? ''));
     $fallbackProducts = collect([
         ['name' => 'Mikrotik Intercell 10 B38+B39', 'price' => 85000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092341-vsplsq9n5r.jpg'],
         ['name' => 'Mikrotik mANT LTE 5o with R11e-LTE', 'price' => 25000, 'image' => 'https://mikrotikkenya.co.ke/uploads/products/20260623092452-wkv4mqomfy.jpg'],
@@ -292,7 +325,7 @@ body{font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif!important;backgroun
 
             <section class="mk-long-content" aria-label="{{ $content['home_testimonials_title'] ?? 'Homepage content' }}">
                 <h2>{{ $content['home_testimonials_title'] ?? 'Homepage content' }}</h2>
-                {!! $content['home_empty_testimonials'] ?? '' !!}
+                {!! $longHomepageContent !!}
             </section>
         </section>
     </main>

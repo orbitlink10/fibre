@@ -2,6 +2,32 @@
 
 @section('title', $category->name.' | Fiber Optics Kenya')
 @section('meta_description', $category->meta_description ?: $category->name.' products from Fiber Optics Kenya.')
+@section('canonical', route('categories.show', ['category' => $category->slug]))
+@section('seo_image', $category->public_image_url)
+@php
+    $categorySchema = [
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            [
+                '@type' => 'CollectionPage',
+                'name' => $category->name,
+                'description' => $category->meta_description ?: strip_tags((string) $category->description),
+                'url' => route('categories.show', ['category' => $category->slug]),
+                'image' => $category->public_image_url,
+            ],
+            [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => route('home')],
+                    ['@type' => 'ListItem', 'position' => 2, 'name' => $category->name, 'item' => route('categories.show', ['category' => $category->slug])],
+                ],
+            ],
+        ],
+    ];
+@endphp
+@section('schema')
+{!! json_encode($categorySchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+@endsection
 
 @section('content')
 @php
