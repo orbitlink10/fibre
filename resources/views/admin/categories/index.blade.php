@@ -11,7 +11,7 @@
 @php
     $imageUrl = function (?string $image) {
         if (! $image) {
-            return 'https://via.placeholder.com/140x90?text=No+Photo';
+            return null;
         }
 
         return str_starts_with($image, 'http') || str_starts_with($image, '//')
@@ -19,6 +19,31 @@
             : route('media.image', ['path' => ltrim($image, '/')]);
     };
 @endphp
+<style>
+    .category-photo-thumb,
+    .category-photo-placeholder {
+        width: 100px;
+        height: 64px;
+    }
+
+    .category-photo-thumb {
+        object-fit: cover;
+        display: block;
+    }
+
+    .category-photo-placeholder {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #dee2e6;
+        border-radius: .375rem;
+        background: #f8f9fa;
+        color: #6c757d;
+        font-size: 12px;
+        line-height: 1.2;
+        text-align: center;
+    }
+</style>
 <div class="px-3 pb-4">
     <div class="card dashboard-content-card overflow-hidden">
         <div class="table-responsive">
@@ -34,11 +59,19 @@
                 </thead>
                 <tbody>
                     @forelse($categories as $category)
+                        @php($categoryImage = $imageUrl($category->icon))
                         <tr>
                             <td>{{ $category->id }}</td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->slug }}</td>
-                            <td><img class="img-thumbnail" src="{{ $imageUrl($category->icon) }}" alt="{{ $category->name }}" style="width:100px;height:64px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/140x90?text=No+Photo';"></td>
+                            <td>
+                                @if($categoryImage)
+                                    <img class="img-thumbnail category-photo-thumb" src="{{ $categoryImage }}" alt="{{ $category->name }}" onerror="this.onerror=null;this.classList.add('d-none');this.nextElementSibling.classList.remove('d-none');">
+                                    <span class="category-photo-placeholder d-none">No Photo</span>
+                                @else
+                                    <span class="category-photo-placeholder">No Photo</span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="d-flex flex-wrap gap-1">
                                     <a class="btn btn-sm btn-info text-white rounded-pill px-3" href="{{ route('categories.show', ['category' => $category->slug]) }}" target="_blank" rel="noopener">Preview</a>

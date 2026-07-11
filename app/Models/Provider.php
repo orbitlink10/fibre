@@ -8,12 +8,16 @@ class Provider extends Model
 {
     protected $fillable = [
         'user_id', 'category_id', 'name', 'phone', 'email', 'document_path',
-        'county', 'location', 'availability_status', 'rating', 'verification_status',
+        'qualification_summary', 'specialties', 'experience_years', 'county',
+        'location', 'availability_status', 'rating', 'verification_status',
     ];
 
     protected function casts(): array
     {
-        return ['rating' => 'decimal:2'];
+        return [
+            'experience_years' => 'integer',
+            'rating' => 'decimal:2',
+        ];
     }
 
     public function user()

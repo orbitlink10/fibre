@@ -94,6 +94,10 @@
                     <span>Analytics</span>
                 </a>
             @endif
+            <a class="sidebar-link {{ request()->routeIs('technicians.*') ? 'active' : '' }}" href="{{ route('technicians.index') }}">
+                <span class="sidebar-icon"><i class="bi bi-person-vcard"></i></span>
+                <span>Technicians</span>
+            </a>
         </div>
 
         <div class="sidebar-section">

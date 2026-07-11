@@ -24,6 +24,7 @@ use App\Http\Controllers\FiberToolController;
 use App\Http\Controllers\ProductController as PublicProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TechnicianController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
@@ -132,6 +133,9 @@ Route::post('/mpesa/callback', [PaymentController::class, 'callback'])->name('mp
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
+    Route::get('/technicians', [TechnicianController::class, 'index'])->name('technicians.index');
+    Route::post('/technicians', [TechnicianController::class, 'store'])->name('technicians.store');
+    Route::put('/technicians', [TechnicianController::class, 'update'])->name('technicians.update');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
 

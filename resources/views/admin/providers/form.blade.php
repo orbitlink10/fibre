@@ -11,9 +11,12 @@
 <div class="col-md-3"><label class="form-label">Email</label><input class="form-control" name="email" value="{{ old('email',$provider->email) }}"></div>
 <div class="col-md-4"><label class="form-label">County</label><input class="form-control" name="county" value="{{ old('county',$provider->county) }}"></div>
 <div class="col-md-4"><label class="form-label">Location</label><input class="form-control" name="location" value="{{ old('location',$provider->location) }}"></div>
-<div class="col-md-4"><label class="form-label">Document</label><input class="form-control" type="file" name="document"></div>
+<div class="col-md-4"><label class="form-label">Document</label><input class="form-control" type="file" name="document">@if($provider->document_path)<div class="form-text"><a href="{{ route('media.image', ['path' => $provider->document_path]) }}" target="_blank" rel="noopener">View current document</a></div>@endif</div>
+<div class="col-md-4"><label class="form-label">Years of experience</label><input class="form-control" type="number" min="0" max="60" name="experience_years" value="{{ old('experience_years',$provider->experience_years) }}"></div>
 <div class="col-md-6"><label class="form-label">Availability</label><select class="form-select" name="availability_status">@foreach(['available','busy','offline'] as $status)<option value="{{ $status }}" @selected(old('availability_status',$provider->availability_status)===$status)>{{ $status }}</option>@endforeach</select></div>
 <div class="col-md-6"><label class="form-label">Verification</label><select class="form-select" name="verification_status">@foreach(['pending','approved','rejected'] as $status)<option value="{{ $status }}" @selected(old('verification_status',$provider->verification_status)===$status)>{{ $status }}</option>@endforeach</select></div>
+<div class="col-12"><label class="form-label">Fiber specialties</label><textarea class="form-control" name="specialties" rows="3">{{ old('specialties',$provider->specialties) }}</textarea></div>
+<div class="col-12"><label class="form-label">Qualification summary</label><textarea class="form-control" name="qualification_summary" rows="4">{{ old('qualification_summary',$provider->qualification_summary) }}</textarea></div>
 <div class="col-12"><label class="form-label">Services</label><select class="form-select" name="service_ids[]" multiple size="6">@foreach($services as $service)<option value="{{ $service->id }}" @selected($provider->services->contains($service))>{{ $service->name }}</option>@endforeach</select></div></div>
 <button class="btn btn-brand mt-3">Save Provider</button></form></div></div></div></div></div>
 @endsection
