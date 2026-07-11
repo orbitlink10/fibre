@@ -21,6 +21,43 @@ class TechnicianListingTest extends TestCase
         $this->get('/technicians')->assertRedirect('/login');
     }
 
+    public function test_public_technician_page_only_shows_approved_technicians(): void
+    {
+        $category = Category::create([
+            'name' => 'Fiber Optic Installation',
+            'slug' => 'fiber-optic-installation',
+            'is_active' => true,
+        ]);
+
+        Provider::create([
+            'category_id' => $category->id,
+            'name' => 'Approved Fiber Tech',
+            'phone' => '0712345678',
+            'email' => 'approved@example.com',
+            'specialties' => 'Fiber splicing and FTTH installation',
+            'qualification_summary' => 'Approved technician',
+            'availability_status' => 'available',
+            'verification_status' => 'approved',
+        ]);
+
+        Provider::create([
+            'category_id' => $category->id,
+            'name' => 'Pending Fiber Tech',
+            'phone' => '0799999999',
+            'specialties' => 'Pending approval',
+            'qualification_summary' => 'Pending technician',
+            'availability_status' => 'available',
+            'verification_status' => 'pending',
+        ]);
+
+        $response = $this->get('/fiber-technicians');
+
+        $response
+            ->assertOk()
+            ->assertSee('Approved Fiber Tech')
+            ->assertDontSee('Pending Fiber Tech');
+    }
+
     public function test_signed_in_user_can_submit_technician_listing_with_qualification_document(): void
     {
         Storage::fake('public');

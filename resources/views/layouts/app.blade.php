@@ -245,6 +245,7 @@
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('bookings.create') }}">Installation Booking</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('pages.preview', 'fiber-to-the-home-kenya') }}">Residential Fiber</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('tools.fiber-troubleshooting-wizard') }}">Troubleshooting</a></li>
+                        <li><i class="bi bi-chevron-right"></i><a href="{{ route('technicians.public') }}">Fiber Technicians</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('tools.free-fiber-technician-request-service') }}">Connectivity Support</a></li>
                         <li><i class="bi bi-chevron-right"></i><a href="{{ route('home') }}">Fiber Optics Kenya</a></li>
                     </ul>

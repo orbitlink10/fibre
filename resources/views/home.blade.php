@@ -52,7 +52,8 @@
         ['label' => 'Shop', 'url' => '#kits', 'has_dropdown' => true],
     ];
     $primaryMenu = collect($primaryMenu)
-        ->reject(fn ($item) => ($item['label'] ?? '') === 'Fiber Tools Kenya')
+        ->reject(fn ($item) => in_array($item['label'] ?? '', ['Fiber Technicians', 'Fiber Tools Kenya'], true))
+        ->push(['label' => 'Fiber Technicians', 'url' => route('technicians.public'), 'has_dropdown' => false])
         ->push(['label' => 'Fiber Tools Kenya', 'url' => '#fiber-tools-kenya', 'has_dropdown' => false])
         ->values()
         ->all();

@@ -11,6 +11,18 @@ use Illuminate\Validation\Rule;
 
 class TechnicianController extends Controller
 {
+    public function publicIndex()
+    {
+        return view('technicians.public', [
+            'technicians' => Provider::with(['category', 'services'])
+                ->where('verification_status', 'approved')
+                ->where('availability_status', '!=', 'offline')
+                ->orderByDesc('rating')
+                ->latest()
+                ->paginate(12),
+        ]);
+    }
+
     public function index(Request $request)
     {
         $user = $request->user();
