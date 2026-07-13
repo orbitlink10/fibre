@@ -111,7 +111,8 @@ Route::get('/sitemap.xml', function () {
 Route::get('/', HomeController::class)->name('home');
 Route::get('/shop/{product:slug}', [PublicProductController::class, 'show'])->name('products.show');
 Route::get('/category/{category:slug}', [PublicCategoryController::class, 'show'])->name('categories.show');
-Route::get('/categories/{category:slug}', fn (App\Models\Category $category) => redirect()->route('categories.show', ['category' => $category->slug], 301));
+Route::get('/categories/{category:slug}', fn (App\Models\Category $category) => redirect()->route('categories.show', ['category' => $category->slug], 301))
+    ->where('category', '^(?!create$).+');
 Route::get('/fiber-technicians', [TechnicianController::class, 'publicIndex'])->name('technicians.public');
 foreach (FiberToolController::slugs() as $fiberToolSlug) {
     Route::get('/'.$fiberToolSlug, [FiberToolController::class, 'show'])
